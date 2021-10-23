@@ -2318,4 +2318,4 @@ async def casino(ctx, path = None, arg1 = None):
 
 ## SERVER - BOT > IP (token)
 ################################################################################
-client.run('NzcxODU0ODMzNjU2NzkxMTEw.X5yL1A.hfbgYKEMMBw-0-hUqoK-jit1IFM')
+client.run('Secret Token, ni de coña la pongo aquí que me tumban el server')
