@@ -1,3 +1,33 @@
-body {
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
+header {
+  background-color:grey;
+  width:100vw;
+  height: 4vw;
+
+  font-size: 3em;
+  line-height: 1,25;
+}
+
+.header-elements{
+  display: inline;
+  margin:20px;
+  color: white;
+}
+
+.front{
+  background-color: green;
+}
+
+.front-general {
+  background-color: red;
+  width: 45%;
+}
+.front-right{
+  background-color: blue;
+  width: 50%
 }
