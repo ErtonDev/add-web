@@ -26,7 +26,7 @@ user_mul    (profile "ficha.txt") * optional |
 cr_{e1/4}   (bot stock cr e) |
 cr_{n1/2}   (bot stock cr n) |
 cant_{e1/4} (bot stock cant e) |
-cant_{e1/2} (bot stock cant n) |
+cant_{n1/2} (bot stock cant n) |
 
 ... more files should be transfered later
 
