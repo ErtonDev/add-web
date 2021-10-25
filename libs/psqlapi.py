@@ -44,9 +44,3 @@ def put(conn, id, table, param, values):
         cur.close()
     except Exception as error:
         print(f"ERROR: Failed to put data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
-
-
-conn = connect()
-
-result = get(conn, "124", "tab", "user_name")
-print(result)
