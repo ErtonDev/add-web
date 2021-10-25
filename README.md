@@ -29,3 +29,6 @@ cant_{e1/4} (bot stock cant e) |
 cant_{e1/2} (bot stock cant n) |
 
 ... more files should be transfered later
+
+## Note
+char length shoud be around 30 in db
