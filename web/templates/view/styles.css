@@ -8,40 +8,48 @@ body{
 }
 /*HEADER*//*HEADER*//*HEADER*/
 header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
   background-color:grey;
-  width:100vw;
-  height: 4vw;
-
-  font-size: 3em;
-  line-height: 1,25;
 }
-
 .header-elements{
-  display: inline;
-  margin:20px;
-  color: white;
+  padding: 1em;
+  font-size: 2em;
+  text-align: center;
+}
+.header-elements:hover{
+  border: 1px solid black;
+}
+p#AuDeDi-Header{
+}
+div#logo{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+div#perfil{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 /*HEADER*//*HEADER*//*HEADER*/
 
 /*FRONT*//*FRONT*//*FRONT*/
 div#front{
-  background-color: pink;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   height: 800px;
 }
+div#front div{
+  padding: 1em;
+}
 div#front-right{
-  float: right;
-  float: top;
-  background-color: blue;
-  width: 50%;
-  height: 100%;
+  background-color: #4E4F50;
+  border-left: 3px solid black
 }
 div#front-left{
-  float: left;
-  float: top;
-  background-color: red;
-  width: 50%;
-  height: 100%;
+  background-color: #746C70;
+  border-right: 3px solid black
 }
 
 h1#AuDeDi-Front{
@@ -49,16 +57,30 @@ h1#AuDeDi-Front{
   top:50%;
   left: 1%;
   transform: translateY(-50%);
-
-  font-size: 7em;
-  background-color: green;
+  font-size: 8em;
 }
 h1#LwOds-Front{
   position: absolute;
   top:50%;
   transform: translateY(-50%);
-
   font-size: 4em;
-  background-color: yellow;
 }
 /*FRONT*//*FRONT*//*FRONT*/
+
+/*CONTAINER*//*CONTAINER*//*CONTAINER*/
+.container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 400px;
+  gap:2em;
+  padding: 3em;
+  background-color: #E2DED0;
+}
+.bloque{
+  border-radius: 5px;
+  background-color: grey;
+}
+.bloque:hover{
+  border: 1px solid black;
+}
+/*CONTAINER*//*CONTAINER*//*CONTAINER*/
