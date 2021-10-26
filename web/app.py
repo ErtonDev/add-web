@@ -2,7 +2,7 @@ from flask import Flask
 from psqlapi import connect, post, get, put
 # website backend
 
-app = Flask("test")
+app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
