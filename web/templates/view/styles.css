@@ -13,7 +13,7 @@ header {
   grid-template-columns: repeat(3, 1fr);
   position: fixed;
   width: 100%;
-  background-color:grey;
+  background-color:#E2DED0;
   z-index: 2;
 }
 .header-elements{
@@ -45,7 +45,7 @@ div#front{
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
   height: 800px;
-  background: url(../../../resources/fondo-img.png);
+  background: url(fondo-img.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -84,7 +84,6 @@ h1#LwOds-Front{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 400px;
-  gap:2em;
   padding: 3em;
   background-color: #E2DED0;
 }
@@ -94,7 +93,52 @@ h1#LwOds-Front{
   border-radius: 5px;
   background-color: grey;
 }
+section#bloque-elhijo{
+  margin: 2em;
+  animation-name: bloqueelhijoff;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
 
+#bloque-elhijo:hover{
+  animation-name: bloqueelhijo;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: bloqueelhijo;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-fill-mode: forwards;
+}
+section#bloque-perfil{
+  margin: 2em;
+  animation-name: bloqueperfiloff;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+#bloque-perfil:hover{
+  animation-name: bloqueperfil;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: bloqueperfil;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-fill-mode: forwards;
+}
+section#bloque-addeditorial{
+  margin: 2em;
+  animation-name: bloqueaddeditorialoff;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+#bloque-addeditorial:hover{
+  animation-name: bloqueaddeditorial;
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: bloqueaddeditorial;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-fill-mode: forwards;
+}
 p#bloque-img{
   margin:25px;
   margin-bottom: 12px;
@@ -108,3 +152,87 @@ p#bloque-letter{
   font-family: 'Roboto', sans-serif;
 }
 /*CONTAINER*//*CONTAINER*//*CONTAINER*/
+
+
+/*ANIMATIONS*//*ANIMATIONS*//*ANIMATIONS*/
+
+/*BLOQUE-ELHIJO*/
+
+@keyframes bloqueelhijo {
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@-webkit-keyframes bloqueelhijo{
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@keyframes bloqueelhijoff {
+  from{
+    margin: 1em;
+  }
+  to{
+    margin: 2em;
+  }
+}
+
+/*BLOQUE-PERFIL*/
+
+@keyframes bloqueperfil {
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@-webkit-keyframes bloqueperfil{
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@keyframes bloqueperfiloff {
+  from{
+    margin: 1em;
+  }
+  to{
+    margin: 2em;
+  }
+}
+
+/*BLOQUE-ADDEDITORIAL*/
+
+@keyframes bloqueaddeditorial {
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@-webkit-keyframes bloqueaddeditorial{
+  from{
+    margin:2em;
+  }
+  to{
+    margin:1em;
+  }
+}
+@keyframes bloqueaddeditorialoff {
+  from{
+    margin: 1em;
+  }
+  to{
+    margin: 2em;
+  }
+}
