@@ -4,8 +4,7 @@ import psycopg2
 def connect():
     print(". . . Connecting to database . . . ")
     try:
-        conn = psycopg2.connect(host="ec2-54-73-68-39.eu-west-1.compute.amazonaws.com", user="zinavvopoesljt",
-                    password="e9acadc681b670392c65be283556f2b67f34875f6fbbc56d4055114f4f39dff9", dbname="d2qnnn465f5n23")
+        conn = psycopg2.connect() # credentials not included in git
         print("CONNECTED!")
         return conn
     except Exception as error:
