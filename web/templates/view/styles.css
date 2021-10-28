@@ -18,13 +18,14 @@ header {
 }
 .header-elements{
   padding: 1em;
-  font-size: 2em;
+  font-size: 1.25vw;
   text-align: center;
+  align-items: center;
 }
 .header-elements:hover{
   border: 1px solid black;
 }
-p#AuDeDi-Header{
+#AuDeDi-Header{
 }
 div#logo{
   display:grid;
@@ -45,7 +46,7 @@ div#front{
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
   height: 800px;
-  background: url(fondo-img.png);
+  background: url(../../../resources/fondo-img.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -67,14 +68,14 @@ h1#AuDeDi-Front{
   top:50%;
   left: 1%;
   transform: translateY(-50%);
-  font-size: 8em;
+  font-size: 7vw;
   color: #E2DED0;
 }
 h1#LwOds-Front{
   position: absolute;
   top:50%;
   transform: translateY(-50%);
-  font-size: 4em;
+  font-size: 4vw;
   color: #E2DED0;
 }
 /*FRONT*//*FRONT*//*FRONT*/
@@ -88,16 +89,19 @@ h1#LwOds-Front{
   background-color: #E2DED0;
 }
 .bloque{
-  display: grid;
   grid-template-rows: 80% 20%;
   border-radius: 5px;
-  background-color: grey;
+  background-color: white;
+  display: block;
+  border: 0px;
+  shadow: 1px;
 }
-section#bloque-elhijo{
+#bloque-elhijo{
   margin: 2em;
   animation-name: bloqueelhijoff;
   animation-duration: 0.3s;
   animation-timing-function: ease;
+  cursor: pointer;
 }
 
 #bloque-elhijo:hover{
@@ -109,11 +113,12 @@ section#bloque-elhijo{
   -webkit-animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
 }
-section#bloque-perfil{
+#bloque-perfil{
   margin: 2em;
   animation-name: bloqueperfiloff;
   animation-duration: 0.3s;
   animation-timing-function: ease;
+  cursor: pointer;
 }
 #bloque-perfil:hover{
   animation-name: bloqueperfil;
@@ -124,11 +129,12 @@ section#bloque-perfil{
   -webkit-animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
 }
-section#bloque-addeditorial{
+#bloque-addeditorial{
   margin: 2em;
   animation-name: bloqueaddeditorialoff;
   animation-duration: 0.3s;
   animation-timing-function: ease;
+  cursor: pointer;
 }
 #bloque-addeditorial:hover{
   animation-name: bloqueaddeditorial;
@@ -140,15 +146,18 @@ section#bloque-addeditorial{
   -webkit-animation-fill-mode: forwards;
 }
 p#bloque-img{
+  height: 70%;
   margin:25px;
   margin-bottom: 12px;
   background-color: #E2DED0;
 }
 
-p#bloque-letter{
+b#bloque-letter{
+
   margin:25px;
   margin-top:12px;
-  background-color: lightgrey;
+  text-align: center;
+  font-size: 1.5vw;
   font-family: 'Roboto', sans-serif;
 }
 /*CONTAINER*//*CONTAINER*//*CONTAINER*/
