@@ -1,10 +1,26 @@
 import psycopg2
+import os
+from dotenv import load_dotenv
+
+# load_dotenv will look for the environment variables
+load_dotenv()
+
+HOST = os.getenv("HOST")
+USER = os.getenv("USER")
+PASS = os.getenv("PASS")
+DBNAME = os.getenv("DBNAME")
 
 #CONNECT Function
 def connect():
     print(". . . Connecting to database . . . ")
     try:
-        conn = psycopg2.connect() # credentials not included in git
+        conn = psycopg2.connect(
+            host=HOST,
+            user=USER,
+            password=PASS,
+            dbname=DBNAME
+        )
+        # credentials not included in git
         print("CONNECTED!")
         return conn
     except Exception as error:
