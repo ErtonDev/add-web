@@ -5,10 +5,10 @@ from dotenv import load_dotenv
 # load_dotenv will look for the environment variables
 load_dotenv()
 
-HOST = os.getenv("HOST")
-USER = os.getenv("USER")
-PASS = os.getenv("PASS")
-DBNAME = os.getenv("DBNAME")
+HOST = os.getenv('HOST')
+USER = os.getenv('USER')
+PASS = os.getenv('PASS')
+DBNAME = os.getenv('DBNAME')
 
 #CONNECT Function
 def connect():
