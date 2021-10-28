@@ -26,6 +26,8 @@ header {
   border: 1px solid black;
 }
 #AuDeDi-Header{
+  text-decoration: none;
+  color: black;
 }
 div#logo{
   display:grid;
@@ -94,7 +96,7 @@ h1#LwOds-Front{
   background-color: white;
   display: block;
   border: 0px;
-  shadow: 1px;
+  box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
 }
 #bloque-elhijo{
   margin: 2em;
@@ -145,15 +147,14 @@ h1#LwOds-Front{
   -webkit-animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
 }
-p#bloque-img{
+#bloque-img{
   height: 70%;
   margin:25px;
   margin-bottom: 12px;
   background-color: #E2DED0;
 }
 
-b#bloque-letter{
-
+#bloque-letter{
   margin:25px;
   margin-top:12px;
   text-align: center;
@@ -161,6 +162,22 @@ b#bloque-letter{
   font-family: 'Roboto', sans-serif;
 }
 /*CONTAINER*//*CONTAINER*//*CONTAINER*/
+
+/*CONTAINER-WAVE*//*CONTAINER-WAVE*//*CONTAINER-WAVE*/
+.container-wave{
+  background-color: rgb(42, 42, 42);
+}
+/*CONTAINER-WAVE*//*CONTAINER-WAVE*//*CONTAINER-WAVE*/
+
+/*CONTAINER2*//*CONTAINER2*//*CONTAINER2*/
+.container-2{
+  width: 100%;
+  height: 600px;
+  background-color: rgb(42, 42, 42);
+}
+
+/*CONTAINER2*//*CONTAINER2*//*CONTAINER2*/
+
 
 
 /*ANIMATIONS*//*ANIMATIONS*//*ANIMATIONS*/
