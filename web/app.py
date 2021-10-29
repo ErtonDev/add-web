@@ -1,12 +1,11 @@
-from flask import Flask
+# MODULES / LIBRAIRES
+from flask import Flask, render_template
+
+# API
 from psqlapi import connect, post, get, put
-# website backend
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello World!<p>"
-
-#Error: Could not locate a Flask application. You did not provide the "FLASK_APP" environment variable,
-# and a "wsgi.py" or "app.py" module was not found in the current directory.
+    return render_template("templates/index.html", name="home")
