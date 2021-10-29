@@ -6,6 +6,10 @@ from psqlapi import connect, post, get, put
 
 app = Flask(__name__)
 
+# home
 @app.route("/")
-def hello_world():
-    return render_template("templates/index.html", name="home")
+def index():
+    return render_template("index.html", name="home")
+
+if __name__ == "__main__":
+    app.run(debug=True)
