@@ -39,7 +39,7 @@ subprocess.Popen(['python3', 'mercado.py']) # exec mercado
 # bot
 # prefix and globals
 client = commands.Bot(command_prefix = '.')
-version = "7.8.0"
+version = "7.8.1"
 status = cycle(['.auxilio', 'by 3rt0n', version])
 
 # main event
@@ -1338,7 +1338,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
 
-                if emprs1_user[0] == 0 and emprs2_user[0] == 0 and emprs3_user[0] == 0 and emprs4_user[0] == 0 and emprs_n_1_user[0] == 0 and emprs_n_2_user[0] == 0:
+                if emprs1_user[0] == "0" and emprs2_user[0] == "0" and emprs3_user[0] == "0" and emprs4_user[0] == "0" and emprs_n_1_user[0] == "0" and emprs_n_2_user[0] == "0":
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
                     completion2 = ":x: -> *Por completar*"
