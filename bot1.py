@@ -1117,7 +1117,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
         try:
             ## CONTROL de nivel
             ########################################################################
-            allowed = lvl.check_license(ctx, 1)
+            allowed = lvl.check_license(ctx, 4)
             ########################################################################
 
             if allowed == True:
