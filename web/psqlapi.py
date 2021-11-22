@@ -42,7 +42,6 @@ def get_user(conn, id, param):
     try:
         cur = conn.cursor();
         cur.execute(f"""SELECT {param} FROM users WHERE user_id = {id}""")
-        # FIXME(Erton): Esto solo funciona en la tabla users, user_id no está en bot
         result = cur.fetchall()
         conn.commit()
         cur.close()
@@ -57,7 +56,6 @@ def get_bot(conn, name, param):
     try:
         cur = conn.cursor();
         cur.execute(f"""SELECT {param} FROM bot WHERE stock = {name}""")
-        # FIXME(Erton): Esto solo funciona en la tabla users, user_id no está en bot
         result = cur.fetchall()
         conn.commit()
         cur.close()
@@ -71,7 +69,6 @@ def put_user(conn, id, param, values):
     try:
         cur = conn.cursor();
         cur.execute(f"""UPDATE users SET {param} = {values} WHERE user_id = {id}""")
-        # FIXME(Erton): Esto solo funciona en la tabla users, user_id no está en bot
         conn.commit()
         cur.close()
     except Exception as error:
@@ -83,7 +80,6 @@ def put_bot(conn, name, param, values):
     try:
         cur = conn.cursor();
         cur.execute(f"""UPDATE bot SET {param} = {values} WHERE stock = {name}""")
-        # FIXME(Erton): Esto solo funciona en la tabla users, user_id no está en bot
         result = cur.fetchall()
         conn.commit()
         cur.close()
