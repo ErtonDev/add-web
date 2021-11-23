@@ -1,5 +1,7 @@
 import web.psqlapi
 
+from datetime import datetime
+
 import rich
 from rich import print
 from rich.traceback import install
@@ -7,6 +9,10 @@ from rich.console import Console
 from rich.table import Table
 from rich.markdown import Markdown
 from rich.layout import Layout
+from rich.panel import Panel
+
+from rich.live import Live
+from time import sleep
 
 console = Console()
 install(show_locals=True)
@@ -40,9 +46,9 @@ def make_layout() -> Layout:
 	layout = Layout(name="Control Center")
 
 	layout.split(
-		Layout(name="header", size=3),
+		Layout(name="header", size=5),
 		Layout(name="main", ratio=1),
-		Layout(name="footer", size=7)
+		Layout(name="footer", size=5)
 	)
 
 	layout["main"].split_row(
@@ -57,7 +63,25 @@ def make_layout() -> Layout:
 
 	return layout
 
+
+
+class Header:
+
+	def __rich__(self) -> Panel:
+		grid = Table.grid(expand=True)
+		grid.add_column(justify="center", ratio=1)
+		grid.add_column(justify="right")
+		grid.add_row(
+			"[b]CC[/b] Control Center",
+			datetime.now().ctime().replace(":", "[blink]:[/]")
+		)
+		return Panel(grid, style="white on blue")
+
+
 layout = make_layout()
+layout["header"].update(Header())
 print(layout)
 
-input = input("Press ENTER key to quit: ")
+with Live(layout, refresh_per_second=10, screen=True):
+	while True:
+		sleep(0.1)
