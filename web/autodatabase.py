@@ -52,8 +52,8 @@ for keys in profiles:
     prokey=[]
     for key in profiles:
         prokey.append(key)
-    value = f"'{prokey[index]}', 'name', {str(profiles.get(prokey[index])[0])[1:-1]}, {str(profiles.get(prokey[index])[1])[1:-1]}, {str(profiles.get(prokey[index])[2])[1:-1]}, {str(profiles.get(prokey[index])[3])[1:-1]}, {str(profiles.get(prokey[index])[4])[1:-1]}, {str(profiles.get(prokey[index])[5])[1:-1]}, {str(profiles.get(prokey[index])[6])[1:-1]}, {str(profiles.get(prokey[index])[7])[1:-1]}, {str(profiles.get(prokey[index])[8])[1:-1]}. {str(profiles.get(prokey[index])[9])[1:-1]}"
-    print(conn, "users", "'user_id', 'user_name', 'user_cr', 'user_e1', 'user_e2', 'user_e3', 'user_e4', 'user_n1', 'user_n2', 'user_lvl', 'user_pt', 'user_prestige', 'usr_transac'", value)
+    value = f"'{prokey[index][:-8]}', 'name', {str(profiles.get(prokey[index])[0])[1:-1]}, {str(profiles.get(prokey[index])[1])[1:-1]}, {str(profiles.get(prokey[index])[2])[1:-1]}, {str(profiles.get(prokey[index])[3])[1:-1]}, {str(profiles.get(prokey[index])[4])[1:-1]}, {str(profiles.get(prokey[index])[5])[1:-1]}, {str(profiles.get(prokey[index])[6])[1:-1]}, {str(profiles.get(prokey[index])[7])[1:-1]}, {str(profiles.get(prokey[index])[8])[1:-1]}. {str(profiles.get(prokey[index])[9])[1:-1]}"
+    api.post(conn, "users", "'user_id', 'user_name', 'user_cr', 'user_e1', 'user_e2', 'user_e3', 'user_e4', 'user_n1', 'user_n2', 'user_lvl', 'user_pt', 'user_prestige', 'usr_transac'", value)
     index = index+1
 index1 = 0
 for keys in empresas:
@@ -61,5 +61,5 @@ for keys in empresas:
     for key in empresas:
         empkey.append(key)
     value = f"'{empkey[index1]}', {str(empresas.get(empkey[index1])[0])[1:-1]}, {str(empresas.get(empkey[index1])[1])[1:-1]}"
-    print(conn, "bot", "'stock', 'cant', 'cr'", value)
+    api.post(conn, "bot", "'stock', 'cant', 'cr'", value)
     index1 = index1+1
