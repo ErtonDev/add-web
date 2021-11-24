@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 # load_dotenv will look for the environment variables
 load_dotenv()
 
-HOST = os.getenv('HOST')
+HOST = os.getenv('DBHOST')
 USER = os.getenv('DBUSER')
 PASS = os.getenv('PASS')
 DBNAME = os.getenv('DBNAME')
