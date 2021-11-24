@@ -8,6 +8,7 @@ conn = api.connect()
 ###PROFILES
 #it puts all discord id's, with all individual information in """profiles""" dicctionary
 profiles={} #data
+
 for profile in os.listdir("../profile"): #loop: num of files in profile folder
     list=[] #reusable list, every time the 2 loop finishes the list cleans
     for file in os.listdir("../profile/"+profile): #2loop: num of files in the designd profile
@@ -24,8 +25,9 @@ for profile in os.listdir("../profile"): #loop: num of files in profile folder
 ###BOLSA
 #it puts all information in 2 separated lists one of the value and the other of the quantity
 #cant
-cantvalues=[]
 empresas={'e_1':'','e_2':'','e_3':'','e_4':'','e_n1':'','e_n2':''}
+
+cantvalues=[]
 for filenames in os.listdir('../bolsa/cant'):
     file = io.open("../bolsa/cant/"+filenames, 'r')
     filevalue = file.readlines()
@@ -38,6 +40,7 @@ for filenames in os.listdir('../bolsa/cr'):
     filevalue = file.readlines()
     file.close()
     crvalues.append(filevalue)
+#juntar todos los datos en un dicctionary """empresas"""
 i = 0
 for keys in empresas:
     list=[]
@@ -46,9 +49,9 @@ for keys in empresas:
     dic = dict.fromkeys([keys], list)
     i = i+1
     empresas.update(dic)
-
+#posts in the database user values
 index = 0
-for keys in profiles:
+for keys in profiles:#list of the profiles names
     prokey=[]
     for key in profiles:
         prokey.append(key)
@@ -66,12 +69,13 @@ for keys in profiles:
     str(profiles.get(prokey[index])[9])[2:-2],
     str(profiles.get(prokey[index])[10])[2:-2])
     index = index+1
+#posts in the database bot values
 index1 = 0
 for keys in empresas:
     empkey=[]
     for key in empresas:
         empkey.append(key)
-    api.post_bot(conn, "bot", empkey[index1],
+    api.post_bot(conn, empkey[index1],
     str(empresas.get(empkey[index1])[0])[2:-2],
     str(empresas.get(empkey[index1])[1])[2:-2])
     index1 = index1+1
