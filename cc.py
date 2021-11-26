@@ -3,12 +3,15 @@ import web.psqlapi
 from datetime import datetime
 
 import rich
+from rich import box
 from rich import print
 from rich.traceback import install
 from rich.console import Console
 from rich.table import Table
 from rich.markdown import Markdown
 from rich.layout import Layout
+from rich.panel import Panel
+from rich.align import Align, VerticalCenter
 from rich.panel import Panel
 
 from rich.live import Live
@@ -17,29 +20,6 @@ from time import sleep
 console = Console()
 install(show_locals=True)
 
-'''
-table = Table(title="----- Values -----")
-
-
-def getvar():
-	table.add_row("CANT e1", "250", "bot/ cant | e1")
-
-def update():
-	with open("ccdata/mkdn.md") as md:
-		markdown = Markdown(md.read())
-
-	table.add_column("Variable", justify="left", style="yellow", no_wrap=True)
-	table.add_column("Value", style="cyan")
-	table.add_column("From", justify="right", style="cyan")
-
-	getvar()
-	console.print(markdown)
-	console.print(table)
-
-
-update()
-input = input("Press ENTER key to quit: ")
-'''
 
 def make_layout() -> Layout:
 	# Define the layout
@@ -63,6 +43,33 @@ def make_layout() -> Layout:
 
 	return layout
 
+def get_variables():
+	# TODO(Erton): Code the API connection to GET values from DB
+	pass
+
+def show_variable_display() -> Panel:
+    # variable display
+    table = Table(title="[b]----- VARIABLE DISPLAY -----[/]")
+
+    table.add_column("Variable Name", justify="right", style="yellow", no_wrap=True)
+    table.add_column("Actual Value", style="cyan")
+    table.add_column("Information Obtained From", justify="right", style="cyan")
+
+    # values
+    # TODO(Erton): get_variables() here
+    table.add_row("CANT e1", "250", "bot/ cant | e1")
+    table.add_row("CANT e2", "250", "bot/ cant | e2")
+    table.add_row("CANT e3", "250", "bot/ cant | e3")
+    table.add_row("CANT e4", "250", "bot/ cant | e4")
+
+    # centering
+    table = Align.center(table)
+    
+    return Panel(table,  
+    	subtitle="ccvar.txt",
+    	box=box.ROUNDED,
+    	padding=(2, 2),
+    	border_style="bright_blue")
 
 
 class Header:
@@ -80,6 +87,7 @@ class Header:
 
 layout = make_layout()
 layout["header"].update(Header())
+layout["body"].update(show_variable_display())
 print(layout)
 
 with Live(layout, refresh_per_second=10, screen=True):
