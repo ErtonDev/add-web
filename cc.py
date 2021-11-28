@@ -1,5 +1,4 @@
 import web.psqlapi
-import msvcrt
 import io
 
 from datetime import datetime
@@ -18,6 +17,9 @@ from rich.panel import Panel
 
 from rich.live import Live
 from time import sleep
+
+import pynput
+from pynput import keyboard
 
 console = Console()
 install(show_locals=True)
@@ -73,7 +75,7 @@ class Selector:
 	def set_pos(self):
 
 		# adds rows inside selector
-		self.pos_counter = 0 
+		self.pos_counter = 0
 		for i in self.selections:
 			# underlines i in position
 			if self.pos_counter == self.position:
@@ -157,8 +159,8 @@ def show_body() -> Panel:
 
     # centering
     table = Align.center(table)
-    
-    return Panel(table,  
+
+    return Panel(table,
     	subtitle="ccvar.txt",
     	box=box.ROUNDED,
     	padding=(2, 2),
@@ -169,7 +171,7 @@ layout = make_layout()
 layout["header"].update(Header())
 layout["body"].update(show_body())
 layout["box1"].update(Selector())
-print(layout) 
+print(layout)
 
 sel = Selector()
 
@@ -178,25 +180,7 @@ with Live(layout, refresh_per_second=10, screen=True):
 	while True:
 
 		# key input check
-		if msvcrt.kbhit():
-			k = msvcrt.getch()
-
-			log = io.open("ccdata/runlog.txt", 'a')
-			log.write("\n" + str(k))
-			log.close()
-
-			if str(k) == "b'w'":
-				sel.up_pos()
-
-				log = io.open("ccdata/runlog.txt", 'a')
-				log.write("\ncall up")
-				log.close()
-
-			if str(k) == "b's'":
-				sel.down_pos()
-
-				log = io.open("ccdata/runlog.txt", 'a')
-				log.write("\ncall down")
-				log.close()
+		# TODO(Erton): code with pynput module.
+		# Search for 'pynput monitoring the keyboard'
 
 		sleep(0.1)
