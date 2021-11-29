@@ -1,3 +1,4 @@
+from web.psqlapi import *
 import random
 import time
 import os
@@ -35,6 +36,9 @@ min_n_2 = 225
 max_n_2 = 325
 margin_n_2 = 15
 
+#API connect
+conn = connect()
+
 while True:
 
     time.sleep(30)
@@ -45,9 +49,7 @@ while True:
     diferencia = random.randint(1, margin_1)
 
     # datos
-    precio_emprs1 = io.open("bolsa/cr/cr_emprs1.txt", 'r')
-    cr1 = precio_emprs1.readlines()
-    precio_emprs1.close()
+    cr1 = get_bot(conn, "e_1", "cr")
 
     # suma o resta
     if int(cr1[0]) <= min_1 + margin_1:
@@ -63,25 +65,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs1 = io.open("bolsa/cr/cr_emprs1.txt", 'w')
-        aplica_emprs1.write(str(int(cr1[0]) + diferencia))
-        aplica_emprs1.close()
+        put_bot(conn, "e_1", "cr", int(cr1[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-
-            aplica_emprs1 = io.open("bolsa/cr/cr_emprs1.txt", 'w')
-            aplica_emprs1.write(str(min_1))
-            aplica_emprs1.close()
+            put_bot(conn, "e_1", "cr", min_1)
 
         else:
-
-            aplica_emprs1 = io.open("bolsa/cr/cr_emprs1.txt", 'w')
-            aplica_emprs1.write(str(int(cr1[0]) - diferencia))
-            aplica_emprs1.close()
-
+            put_bot(conn, "e_1", "cr", int(cr1[0]) - diferencia)
 
     # empresa 2 ################################################################
 
@@ -89,9 +81,7 @@ while True:
     diferencia = random.randint(1, margin_2)
 
     # datos
-    precio_emprs2 = io.open("bolsa/cr/cr_emprs2.txt", 'r')
-    cr2 = precio_emprs2.readlines()
-    precio_emprs2.close()
+    cr2 = get_bot(conn, "e_2", "cr")
 
     # suma o resta
     if int(cr2[0]) <= min_2 + margin_2:
@@ -106,25 +96,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs2 = io.open("bolsa/cr/cr_emprs2.txt", 'w')
-        aplica_emprs2.write(str(int(cr2[0]) + diferencia))
-        aplica_emprs2.close()
+        put_bot(conn, "e_2", "cr", int(cr2[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-
-            aplica_emprs2 = io.open("bolsa/cr/cr_emprs2.txt", 'w')
-            aplica_emprs2.write(str(min_2))
-            aplica_emprs2.close()
+            put_bot(conn, "e_2", "cr", min_2)
 
         else:
-
-            aplica_emprs2 = io.open("bolsa/cr/cr_emprs2.txt", 'w')
-            aplica_emprs2.write(str(int(cr2[0]) - diferencia))
-            aplica_emprs2.close()
-
+            put_bot(conn, "e_2", "cr", int(cr2[0]) - diferencia)
 
     # empresa 3 ################################################################
 
@@ -132,9 +112,7 @@ while True:
     diferencia = random.randint(1, margin_3)
 
     # datos
-    precio_emprs3 = io.open("bolsa/cr/cr_emprs3.txt", 'r')
-    cr3 = precio_emprs3.readlines()
-    precio_emprs3.close()
+    cr3 = get_bot(conn, "e_3", "cr")
 
     # suma o resta
     if int(cr3[0]) <= min_3 + margin_3:
@@ -149,25 +127,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs3 = io.open("bolsa/cr/cr_emprs3.txt", 'w')
-        aplica_emprs3.write(str(int(cr3[0]) + diferencia))
-        aplica_emprs3.close()
+        put_bot(conn, "e_3", "cr", int(cr3[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-
-            aplica_emprs3 = io.open("bolsa/cr/cr_emprs3.txt", 'w')
-            aplica_emprs3.write(str(min_3))
-            aplica_emprs3.close()
+            put_bot(conn, "e_3", "cr", min_3)
 
         else:
-
-            aplica_emprs3 = io.open("bolsa/cr/cr_emprs3.txt", 'w')
-            aplica_emprs3.write(str(int(cr3[0]) - diferencia))
-            aplica_emprs3.close()
-
+            put_bot(conn, "e_3", "cr", int(cr3[0]) - diferencia)
 
     # empresa 4 ################################################################
 
@@ -175,9 +143,7 @@ while True:
     diferencia = random.randint(1, margin_4)
 
     # datos
-    precio_emprs4 = io.open("bolsa/cr/cr_emprs4.txt", 'r')
-    cr4 = precio_emprs4.readlines()
-    precio_emprs4.close()
+    cr4 = get_bot(conn, "e_4", "cr")
 
     # suma o resta
     if int(cr4[0]) <= min_4 + margin_4:
@@ -192,24 +158,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs4 = io.open("bolsa/cr/cr_emprs4.txt", 'w')
-        aplica_emprs4.write(str(int(cr4[0]) + diferencia))
-        aplica_emprs4.close()
+        put_bot(conn, "e_4", "cr", int(cr4[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-
-            aplica_emprs4 = io.open("bolsa/cr/cr_emprs4.txt", 'w')
-            aplica_emprs4.write(str(min_4))
-            aplica_emprs4.close()
+            put_bot(conn, "e_4", "cr", min_4)
 
         else:
-
-            aplica_emprs4 = io.open("bolsa/cr/cr_emprs4.txt", 'w')
-            aplica_emprs4.write(str(int(cr4[0]) - diferencia))
-            aplica_emprs4.close()
+            put_bot(conn, "e_4", "cr", int(cr4[0]) - diferencia)
 
 
     # empresa negra 1 ##########################################################
@@ -218,9 +175,7 @@ while True:
     diferencia = random.randint(1, margin_n_1)
 
     # datos
-    precio_emprs_n_1 = io.open("bolsa/cr/cr_emprs_n_1.txt", 'r')
-    cr_n_1 = precio_emprs_n_1.readlines()
-    precio_emprs_n_1.close()
+    cr_n_1 = get_bot(conn, "e_n1", "cr")
 
     # suma o resta
     if int(cr_n_1[0]) <= min_n_1 + margin_n_1:
@@ -236,25 +191,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs_n_1 = io.open("bolsa/cr/cr_emprs_n_1.txt", 'w')
-        aplica_emprs_n_1.write(str(int(cr_n_1[0]) + diferencia))
-        aplica_emprs_n_1.close()
+        put_bot(conn, "e_n1", "cr", int(cr_n_1[0]) + diferencia)
 
     else:
 
         if int(cr_n_1[0]) - diferencia <= 5:
-
-            aplica_emprs_n_1 = io.open("bolsa/cr/cr_emprs_n_1.txt", 'w')
-            aplica_emprs_n_1.write(str(min_n_1))
-            aplica_emprs_n_1.close()
+            put_bot(conn, "e_n1", "cr", min_n_1)
 
         else:
-
-            aplica_emprs_n_1 = io.open("bolsa/cr/cr_emprs_n_1.txt", 'w')
-            aplica_emprs_n_1.write(str(int(cr_n_1[0]) - diferencia))
-            aplica_emprs_n_1.close()
-
+            put_bot(conn, "e_n1", "cr", int(cr_n_1[0]) - diferencia)
 
     # empresa negra 2 ##########################################################
 
@@ -262,9 +207,7 @@ while True:
     diferencia = random.randint(1, margin_n_2)
 
     # datos
-    precio_emprs_n_2 = io.open("bolsa/cr/cr_emprs_n_2.txt", 'r')
-    cr_n_2 = precio_emprs_n_2.readlines()
-    precio_emprs_n_2.close()
+    cr_n_2 = get_bot(conn, "e_n2", "cr")
 
     # suma o resta
     if int(cr_n_2[0]) <= min_n_2 + margin_n_2:
@@ -280,21 +223,12 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-
-        aplica_emprs_n_2 = io.open("bolsa/cr/cr_emprs_n_1.txt", 'w')
-        aplica_emprs_n_2.write(str(int(cr_n_2[0]) + diferencia))
-        aplica_emprs_n_2.close()
+        put_bot(conn, "e_n2", "cr", int(cr_n_2[0]) + diferencia)
 
     else:
 
         if int(cr_n_2[0]) - diferencia <= 5:
-
-            aplica_emprs_n_2 = io.open("bolsa/cr/cr_emprs_n_2.txt", 'w')
-            aplica_emprs_n_2.write(str(min_n_2))
-            aplica_emprs_n_2.close()
+            put_bot(conn, "e_n2", "cr", min_n_2)
 
         else:
-
-            aplica_emprs_n_2 = io.open("bolsa/cr/cr_emprs_n_2.txt", 'w')
-            aplica_emprs_n_2.write(str(int(cr_n_2[0]) - diferencia))
-            aplica_emprs_n_2.close()
+            put_bot(conn, "e_n2", "cr", int(cr_n_2[0]) - diferencia)
