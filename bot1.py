@@ -16,6 +16,8 @@ from itertools import cycle
 import logclass
 from logclass import Log
 
+from web.psqlapi import *
+
 import niveles
 from niveles import License_manager
 
@@ -29,6 +31,8 @@ from niveles import License_manager
 os.system('clear')
 colorama.init(autoreset=True)
 log = Log()
+
+conn = connect()
 
 # license manager / levels
 lvl = License_manager()
@@ -887,8 +891,10 @@ async def registro(ctx):
 
     # la cuenta ya existe
     try:
-        confirmation = io.open(f"profile/{ctx.author.id}_profile/points.txt", 'r')
-        confirmation.close()
+        #confirmation = io.open(f"profile/{ctx.author.id}_profile/points.txt", 'r')
+        #confirmation.close()
+
+        confirmation = get_user(conn, ctx.author.id, "user_pt")
 
         await ctx.send(embed = embedDato(ctx, "¡Pero si ya te has registrado!", "Revisa la información de tu cuenta con .perfil", "gold"))
         log.logFail("registro", ctx.author.name, "AccountExists")
@@ -896,8 +902,10 @@ async def registro(ctx):
     # nueva cuenta
     except:
         # carpeta
-        create_profile = os.makedirs(f"profile/{ctx.author.id}_profile", exist_ok = True)
+        #create_profile = os.makedirs(f"profile/{ctx.author.id}_profile", exist_ok = True)
+        create_profile = post_user(conn, ctx.author.id, ctx.author.name, 30, 0, 0, 0, 0, 0, 0, 0, 15, "x", 0)
 
+        """
         # archivos
         create_points = io.open(f"profile/{ctx.author.id}_profile/points.txt", 'w')
         create_points.write("15")
@@ -946,6 +954,7 @@ async def registro(ctx):
         create_multas = io.open(f"profile/{ctx.author.id}_profile/multas.txt", 'w')
         create_multas.write("")
         create_multas.close()
+        """
 
         await ctx.send(embed = embedDato(ctx, "¡Tu cuenta ha sido creada con éxito!", ".perfil para más información"))
         log.logCall("registro", ctx.author.name)
@@ -1018,6 +1027,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
         try:
             # encontrar los datos para todas las variables
             # 1
+            
+            """
             read_cant_emprs1 = io.open(f"profile/{ctx.author.id}_profile/emprs1.txt", 'r')
             actual_cant_emprs1 = read_cant_emprs1.readlines()
             read_cant_emprs1.close()
@@ -1068,6 +1079,22 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             read_cr_emprs4 = io.open(f"bolsa/cr/cr_emprs4.txt", 'r')
             actual_cr_emprs4 = read_cr_emprs4.readlines()
             read_cr_emprs4.close()
+            """
+            
+            actual_cant_emprs1 = get_user(conn, ctx.author.id, "user_e1")
+            actual_cant_emprs2 = get_user(conn, ctx.author.id, "user_e2")
+            actual_cant_emprs3 = get_user(conn, ctx.author.id, "user_e3")
+            actual_cant_emprs4 = get_user(conn, ctx.author.id, "user_e4")
+
+            actual_stock_emprs1 = get_bot(conn, "e_1", "cant")
+            actual_stock_emprs2 = get_bot(conn, "e_2", "cant")
+            actual_stock_emprs3 = get_bot(conn, "e_3", "cant")
+            actual_stock_emprs4 = get_bot(conn, "e_4", "cant")
+
+            actual_cr_emprs1 = get_bot(conn, "e_1", "cr")
+            actual_cr_emprs2 = get_bot(conn, "e_2", "cr")
+            actual_cr_emprs3 = get_bot(conn, "e_3", "cr")
+            actual_cr_emprs4 = get_bot(conn, "e_4", "cr")
 
             # embed
             embed = discord.Embed(
@@ -1082,31 +1109,31 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             )
 
             embed.add_field(
-                name = f"1) Autistas Del Discord ({actual_stock_emprs1[0]}) ~{actual_cant_emprs1[0]}",
-                value = actual_cr_emprs1[0],
+                name = f"1) Autistas Del Discord ({actual_stock_emprs1}) ~{actual_cant_emprs1}",
+                value = actual_cr_emprs1,
                 inline = False
             )
 
             embed.add_field(
-                name = f"2) Send Nudes ({actual_stock_emprs2[0]}) ~{actual_cant_emprs2[0]}",
-                value = actual_cr_emprs2[0],
+                name = f"2) Send Nudes ({actual_stock_emprs2}) ~{actual_cant_emprs2}",
+                value = actual_cr_emprs2,
                 inline = False
             )
 
             embed.add_field(
-                name = f"3) EMStudio ({actual_stock_emprs3[0]}) ~{actual_cant_emprs3[0]}",
-                value = actual_cr_emprs3[0],
+                name = f"3) EMStudio ({actual_stock_emprs3}) ~{actual_cant_emprs3}",
+                value = actual_cr_emprs3,
                 inline = False
             )
 
             embed.add_field(
-                name = f"4) El Hijo Corp. ({actual_stock_emprs4[0]}) ~{actual_cant_emprs4[0]}",
-                value = actual_cr_emprs4[0],
+                name = f"4) El Hijo Corp. ({actual_stock_emprs4}) ~{actual_cant_emprs4}",
+                value = actual_cr_emprs4,
                 inline = False
             )
 
             await ctx.send(embed = embed)
-            log.logCall(f"banco mercado", ctx.author.name, True, f"{actual_cr_emprs1[0]} | {actual_cr_emprs2[0]} | {actual_cr_emprs3[0]} | {actual_cr_emprs4[0]}")
+            log.logCall(f"banco mercado", ctx.author.name, True, f"{actual_cr_emprs1} | {actual_cr_emprs2} | {actual_cr_emprs3} | {actual_cr_emprs4}")
 
         except FileNotFoundError:
             await ctx.send(embed = embedDato(ctx, "No tienes una cuenta.", "Crea tu cuenta con **.registro** para acceder a estas funciones.", "gold"))
@@ -1124,6 +1151,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                 # encontrar los datos para todas las variables
                 # n_1
+
+                """
                 read_cant_emprs_n_1 = io.open(f"profile/{ctx.author.id}_profile/emprs_n_1.txt", 'r')
                 actual_cant_emprs_n_1 = read_cant_emprs_n_1.readlines()
                 read_cant_emprs_n_1.close()
@@ -1148,6 +1177,16 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 read_cr_emprs_n_2 = io.open(f"bolsa/cr/cr_emprs_n_2.txt", 'r')
                 actual_cr_emprs_n_2 = read_cr_emprs_n_2.readlines()
                 read_cr_emprs_n_2.close()
+                """
+
+                actual_cant_emprs_n_1 = get_user(conn, ctx.author.id, "user_n1")
+                actual_cant_emprs_n_2 = get_user(conn, ctx.author.id, "user_n2")
+
+                actual_stock_emprs_n_1 = get_bot(conn, "e_n1", "cant")
+                actual_stock_emprs_n_2 = get_bot(conn, "e_n2", "cant")
+
+                actual_cr_emprs_n_1 = get_bot(conn, "e_n1", "cr")
+                actual_cr_emprs_n_2 = get_bot(conn, "e_n2", "cr")
 
                 # embed
                 embed = discord.Embed(
@@ -1162,19 +1201,19 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 )
 
                 embed.add_field(
-                    name = f"1) PozoHub ({actual_stock_emprs_n_1[0]}) ~{actual_cant_emprs_n_1[0]}",
-                    value = actual_cr_emprs_n_1[0],
+                    name = f"1) PozoHub ({actual_stock_emprs_n_1}) ~{actual_cant_emprs_n_1}",
+                    value = actual_cr_emprs_n_1,
                     inline = False
                 )
 
                 embed.add_field(
-                    name = f"2) PlsPorn Ent. ({actual_stock_emprs_n_2[0]}) ~{actual_cant_emprs_n_2[0]}",
-                    value = actual_cr_emprs_n_2[0],
+                    name = f"2) PlsPorn Ent. ({actual_stock_emprs_n_2}) ~{actual_cant_emprs_n_2}",
+                    value = actual_cr_emprs_n_2,
                     inline = False
                 )
 
                 await ctx.send(embed = embed)
-                log.logCall(f"banco mercado_negro", ctx.author.name, True, f"{actual_cr_emprs_n_1[0]} | {actual_cr_emprs_n_2[0]}")
+                log.logCall(f"banco mercado_negro", ctx.author.name, True, f"{actual_cr_emprs_n_1} | {actual_cr_emprs_n_2}")
 
             else:
 
@@ -1200,24 +1239,31 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 desc2 = "Haz 10 transacciones"
 
                 # objetivo 1
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
 
-                if int(cr_user[0]) >= 500:
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
+
+                if int(cr_user) >= 500:
                     completion1 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion1 = f":x: -> *Por completar* ({cr_user[0]})"
+                    completion1 = f":x: -> *Por completar* ({cr_user})"
 
                 # objetivo 2
+                """
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
+                """
+                transac_user = get_user(conn, ctx.author.name, "user_transac")
 
-                if int(transac_user[0]) >= 10:
+                if int(transac_user) >= 10:
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion2 = f":x: -> *Por completar* ({transac_user[0]})"
+                    completion2 = f":x: -> *Por completar* ({transac_user})"
 
             elif next_level == 2:
                 price = "Acceso al juego del bote"
@@ -1226,24 +1272,30 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 desc2 = "Haz 25 transacciones"
 
                 # objetivo 1
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.name, "user_cr")
 
-                if int(cr_user[0]) >= 2500:
+                if int(cr_user) >= 2500:
                     completion1 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion1 = f":x: -> *Por completar* ({cr_user[0]})"
+                    completion1 = f":x: -> *Por completar* ({cr_user})"
 
                 # objetivo 2
+                """
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
+                """
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
-                if int(transac_user[0]) >= 25:
+                if int(transac_user) >= 25:
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion2 = f":x: -> *Por completar* ({transac_user[0]})"
+                    completion2 = f":x: -> *Por completar* ({transac_user})"
 
             elif next_level == 3:
                 price = "Acceso al juego de la tragaperras"
@@ -1252,24 +1304,30 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 desc2 = "Haz 50 transacciones"
 
                 # objetivo 1
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-                if int(cr_user[0]) >= 10000:
+                if int(cr_user) >= 10000:
                     completion1 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion1 = f":x: -> *Por completar* ({cr_user[0]})"
+                    completion1 = f":x: -> *Por completar* ({cr_user})"
 
                 # objetivo 2
+                """
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
+                """
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
-                if int(transac_user[0]) >= 50:
+                if int(transac_user) >= 50:
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion2 = f":x: -> *Por completar* ({transac_user[0]})"
+                    completion2 = f":x: -> *Por completar* ({transac_user})"
 
             elif next_level == 4:
                 price = "Desbloquea el misterioso mercado negro..."
@@ -1278,24 +1336,30 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 desc2 = "Haz 100 transacciones"
 
                 # objetivo 1
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-                if int(cr_user[0]) >= 100000:
+                if int(cr_user) >= 100000:
                     completion1 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion1 = f":x: -> *Por completar* ({cr_user[0]})"
+                    completion1 = f":x: -> *Por completar* ({cr_user})"
 
                 # objetivo 2
+                """
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
+                """
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
-                if int(transac_user[0]) >= 100:
+                if int(transac_user) >= 100:
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion2 = f":x: -> *Por completar* ({transac_user[0]})"
+                    completion2 = f":x: -> *Por completar* ({transac_user})"
 
             else:
                 price = "El rol de Maestro Inversor y una recompensa secreta...\n\n*Al subir a nivel 5 completas el juego y por lo tanto se reiniciará tu cuenta para empezar de nuevo.*\n*Sin embargo .banco te recompensará por cada vez que completes el juego, vale la pena hacerlo varias veces :)*"
@@ -1304,20 +1368,24 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 desc2 = "Vende todas tus acciones"
 
                 # objetivo 1
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-                if int(cr_user[0]) >= 500000:
+                if int(cr_user) >= 500000:
                     completion1 = ":white_check_mark: -> *Completado*"
                 else:
-                    completion1 = f":x: -> *Por completar* ({cr_user[0]})"
+                    completion1 = f":x: -> *Por completar* ({cr_user})"
 
                 # objetivo 2
+                """
                 check_emprs1_user = io.open(f"profile/{ctx.author.id}_profile/emprs1.txt", 'r')
                 emprs1_user = check_emprs1_user.readlines()
                 check_emprs1_user.close()
-
+                
                 check_emprs2_user = io.open(f"profile/{ctx.author.id}_profile/emprs2.txt", 'r')
                 emprs2_user = check_emprs2_user.readlines()
                 check_emprs2_user.close()
@@ -1337,8 +1405,16 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 check_emprs_n_2_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_2.txt", 'r')
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
+                """
+                emprs1_user =    get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user =    get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user =    get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user =    get_user(conn, ctx.author.id, "user_e4")
+                emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+                emprs_n_2_user = get_user(conn, ctx.author.id, "user_n2")
 
-                if emprs1_user[0] == "0" and emprs2_user[0] == "0" and emprs3_user[0] == "0" and emprs4_user[0] == "0" and emprs_n_1_user[0] == "0" and emprs_n_2_user[0] == "0":
+
+                if emprs1_user == "0" and emprs2_user == "0" and emprs3_user == "0" and emprs4_user == "0" and emprs_n_1_user == "0" and emprs_n_2_user == "0":
                     completion2 = ":white_check_mark: -> *Completado*"
                 else:
                     completion2 = ":x: -> *Por completar*"
@@ -1358,27 +1434,36 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
             # datos para comparación con los requisitos
             # credits
+            """
             check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
+            """
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-            cr_comparation = int(cr_user[0])
+            cr_comparation = int(cr_user)
 
             # transac
+            """
             check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
             transac_user = check_transac_user.readlines()
             check_transac_user.close()
+            """
+            transac_user = get_user(conn, ctx.author.id, "user_transac")
 
-            transac_comparation = int(transac_user[0])
+            transac_comparation = int(transac_user)
 
             # comprueva los requisitos
             # si todo está bien y no cae en ningún return te cobra
             if next_level == 1:
 
                 if cr_comparation >= 500 and transac_comparation >= 10:
+                    """
                     cobra_cr = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     cobra_cr.write( str( cr_comparation - 500 ) )
                     cobra_cr.close()
+                    """
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1387,9 +1472,13 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             elif next_level == 2:
 
                 if cr_comparation >= 2500 and transac_comparation >= 25:
+                    """
                     cobra_cr = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     cobra_cr.write( str( cr_comparation - 2500 ) )
                     cobra_cr.close()
+                    """
+
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-2500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1398,9 +1487,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             elif next_level == 3:
 
                 if cr_comparation >= 10000 and transac_comparation >= 50:
+                    """
                     cobra_cr = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     cobra_cr.write( str( cr_comparation - 10000 ) )
                     cobra_cr.close()
+                    """
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-10000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1409,9 +1501,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             elif next_level == 4:
 
                 if cr_comparation >= 100000 and transac_comparation >= 100:
+                    """
                     cobra_cr = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     cobra_cr.write( str( cr_comparation - 100000 ) )
                     cobra_cr.close()
+                    """
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-100000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1421,6 +1516,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                 # concretamente en caso de subir a nivel 5:
                 # mira que haya vendido todas las acciones
+                """
                 check_emprs1_user = io.open(f"profile/{ctx.author.id}_profile/emprs1.txt", 'r')
                 emprs1_user = check_emprs1_user.readlines()
                 check_emprs1_user.close()
@@ -1444,11 +1540,21 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 check_emprs_n_2_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_2.txt", 'r')
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
+                """
+                emprs1_user = get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user = get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user = get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user = get_user(conn, ctx.author.id, "user_e4")
+                emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+                emprs_n_2_user = get_user(conn, ctx.author.id, "user_n1")
 
-                if cr_comparation >= 500000 and emprs1_user[0] == 0 and emprs2_user[0] == 0 and emprs3_user[0] == 0 and emprs4_user[0] == 0 and emprs_n_1_user[0] == 0 and emprs_n_2_user[0] == 0:
+                if cr_comparation >= 500000 and emprs1_user == 0 and emprs2_user == 0 and emprs3_user == 0 and emprs4_user == 0 and emprs_n_1_user == 0 and emprs_n_2_user == 0:
+                    """
                     cobra_cr = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     cobra_cr.write( str( cr_comparation - 500000 ) )
                     cobra_cr.close()
+                    """
+                    cobra_cr = get_put(conn, ctx.author.id, "user_cr", f"{cr_comparation-500000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
