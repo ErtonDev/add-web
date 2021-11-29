@@ -6,7 +6,7 @@ ADD-WEB is a Discord server related website and other important scripts related 
 ## Programming languages
 **For the most part we are using python.** The bot was built using discord.py and all the website backend uses flask. The rest of the website is HTML and CSS. Take into account that we have also used different python libraries.
 
-This are the libraries and versions we are using:
+These are the libraries and versions we are using:
 ```
 click==8.0.3
 Flask==2.0.2
@@ -18,6 +18,7 @@ python-dotenv==0.19.1
 Werkzeug==2.0.2
 ```
 You can also find this in the `requirements.txt` file.
+(Check the requirements file to get an updated description)
 
 ## Where to find everything
 We only need help to build the website. You can find all the files inside the `web` folder.

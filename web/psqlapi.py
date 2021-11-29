@@ -5,14 +5,14 @@ from dotenv import load_dotenv
 # load_dotenv will look for the environment variables
 load_dotenv()
 
-HOST = os.getenv('HOST')
+HOST = os.getenv('DBHOST')
 USER = os.getenv('DBUSER')
 PASS = os.getenv('PASS')
 DBNAME = os.getenv('DBNAME')
 
 #CONNECT Function
 def connect():
-    print(". . . Connecting to database . . . ")
+    print(". . . Connecting to database . . .")
     try:
         conn = psycopg2.connect(
             host=HOST,
@@ -35,18 +35,24 @@ def post_bot(conn, stock, cant, cr):
         conn.commit()
         cur.close()
     except Exception as error:
+        conn.rollback()
         print(f"ERROR: Failed to insert data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+    else:
+        conn.commit()
 
 #POST(User) Function
 def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac):
     try:
         cur = conn.cursor();
         cur.execute(f"""INSERT INTO users(user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac)
-        VALUES({user_id}, '{user_name}', {user_cr}, {user_e1}, {user_e2}, {user_e3}, {user_e4}, {user_n1}, {user_n2}, {user_lvl}, {user_pt}, {user_prestige}, {user_transac})""")
+        VALUES({user_id}, '{user_name}', {user_cr}, {user_e1}, {user_e2}, {user_e3}, {user_e4}, {user_n1}, {user_n2}, {user_lvl}, {user_pt}, '{user_prestige}', {user_transac})""")
         conn.commit()
         cur.close()
     except Exception as error:
+        conn.rollback()
         print(f"ERROR: Failed to insert data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+    else:
+        conn.commit()
 
 #GET(User) Function
 def get_user(conn, id, param):
