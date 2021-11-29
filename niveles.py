@@ -6,27 +6,22 @@
 ## MODULES / LIBRARIES
 ################################################################################
 import io
+from web.psqlapi.py import *
 
 ## CLASS
 ################################################################################
 class License_manager():
-
+    conn = connect()
     # NOTE: Determina el nivel actual del usuario
     def determinate_license(self, ctx):
-
-        user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'r')
-        actual_level = user_level.readlines()
-        user_level.close()
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
         return level
 
     # NOTE: Revisa que se cumplan los requisitos esperados del usuario por su nivel de licencia
     def check_license(self, ctx, lvl_num):
-
-        user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'r')
-        actual_level = user_level.readlines()
-        user_level.close()
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
 
@@ -44,63 +39,48 @@ class License_manager():
     # 2: Acceso al Bote                                                         > 2500cr 25transac
     # 3: Acceso a la tragaperras                                                > 10000cr 50transac
     # 4: Acceso al mercado negro                                                > 100000cr 100transac
-    # 5: Te has pasado el juego, te llevas un pin en tu cuenta y empiezas de 0  > 500000cr (Además te llevas el maestro inversor)
+    # 5: Te has pasado el juego, te llevas un pin en tu cuenta y empiezas de 0  > 500000cr (AdemÃ¡s te llevas el maestro inversor)
     ############################################################################
 
     # NOTE: Dar licencia
     def asign_license(self, ctx):
         # calcula el siguiente nivel
-        user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'r')
-        actual_level = user_level.readlines()
-        user_level.close()
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
         next_level = int(level) + 1
 
         # aplica la mejora de nivel
-        user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'w')
 
         # si el nivel al que sube es 5 debe reiniciar todo y dar prestigio
         if next_level != 5:
 
             # siguiente nivel
-            user_level.write(str(next_level))
-            user_level.close()
+            put_user(conn, ctx.author.id, "user_lvl", next_level)
 
             # transacciones a cero
-            '''reset_user_transac = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'w')
-            reset_user_transac.write("0")
-            reset_user_transac.close()'''
+            put_user(conn, ctx.author.id, "user_transac", 0)
 
         else:
-
-            user_level.write("0")
-            user_level.close()
-
             # reinicia la cuenta
+            # lvl
+            put_user(conn, ctx.author.id, "user_lvl", 0)
+
             # credit
-            reset_user_credits = io.open(f"profile/{ctx.author.profile}_profile/credit.txt", 'w')
-            reset_user_credits.write("30")
-            reset_user_credits.close()
+            put_user(conn, ctx.author.id, "user_cr", 30)
 
             # transac
-            '''reset_user_transac = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'w')
-            reset_user_transac.write("0")
-            reset_user_transac.close()'''
+            put_user(conn, ctx.author.id, "user_transac", 0)
 
             # prestigio
-            new_prestige = io.open(f"profile/{ctx.author.id}_profile/prestige.txt", 'a')
-            new_prestige.write("*")
-            new_prestige.close()
+            put_user(conn, ctx.author.id, "user_prestige", "*")
 
     # NOTE: Quita un nivel
     def remove_license(self, ctx):
         # lee el nivel
-        user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'r')
-        actual_level = user_level.readlines()
-        user_level.close()
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
-        level = int(actual_level[0])
+        level = actual_level[0]
 
         # si el nivel es cero no hace nada
         if level == 0:
@@ -108,6 +88,4 @@ class License_manager():
 
         else:
             # en caso de no serlo resta uno
-            user_level = io.open(f"profile/{ctx.author.id}_profile/level.txt", 'w')
-            user_level.write( str( int(level) - 1 ) )
-            user_level.close()
+            put_user(conn, ctx.author.id, "user_lvl", int(level) - 1)
