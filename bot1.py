@@ -1406,10 +1406,10 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
                 """
-                emprs1_user =    get_user(conn, ctx.author.id, "user_e1")
-                emprs2_user =    get_user(conn, ctx.author.id, "user_e2")
-                emprs3_user =    get_user(conn, ctx.author.id, "user_e3")
-                emprs4_user =    get_user(conn, ctx.author.id, "user_e4")
+                emprs1_user    = get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user    = get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user    = get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user    = get_user(conn, ctx.author.id, "user_e4")
                 emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
                 emprs_n_2_user = get_user(conn, ctx.author.id, "user_n2")
 
@@ -1541,10 +1541,10 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
                 """
-                emprs1_user = get_user(conn, ctx.author.id, "user_e1")
-                emprs2_user = get_user(conn, ctx.author.id, "user_e2")
-                emprs3_user = get_user(conn, ctx.author.id, "user_e3")
-                emprs4_user = get_user(conn, ctx.author.id, "user_e4")
+                emprs1_user    = get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user    = get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user    = get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user    = get_user(conn, ctx.author.id, "user_e4")
                 emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
                 emprs_n_2_user = get_user(conn, ctx.author.id, "user_n1")
 
