@@ -12,7 +12,6 @@ DBNAME = os.getenv('DBNAME')
 
 #CONNECT Function
 def connect():
-    print(". . . Connecting to database . . .")
     try:
         conn = psycopg2.connect(
             host=HOST,
@@ -21,7 +20,6 @@ def connect():
             dbname=DBNAME
         )
         # credentials not included in git
-        print("CONNECTED!")
         return conn
     except Exception as error:
         print(f"ERROR: Failed to connect to database!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
@@ -68,7 +66,7 @@ def get_user(conn, id, param):
         print(f"ERROR: Failed to get data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #GET(Bot) Function
-#name can be: "e-1", "e-2", "e-3", "e-4", "en-1", "en-2"
+#name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
 def get_bot(conn, name, param):
     try:
         cur = conn.cursor();
@@ -92,7 +90,7 @@ def put_user(conn, id, param, values):
         print(f"ERROR: Failed to put data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #PUT(Bot) Function
-#name can be: "e-1", "e-2", "e-3", "e-4", "en-1", "en-2"
+#name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
 def put_bot(conn, name, param, values):
     try:
         cur = conn.cursor();
