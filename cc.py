@@ -5,7 +5,6 @@ from datetime import datetime
 
 import rich
 from rich import box
-from rich import print
 from rich.traceback import install
 from rich.console import Console
 from rich.table import Table
@@ -40,8 +39,6 @@ class Header:
 
 # selector methods as well as position handling
 class Selector:
-	# FIXME(Erton): Currently giving a strange error, stack overflow says indentations may be the issue
-	# sublime text has been giving me some problems with indentations so I may want to try using another code editor
 
 	def __init__(self):
 		self.position = 0
@@ -166,6 +163,23 @@ def show_body() -> Panel:
     	padding=(2, 2),
     	border_style="bright_blue")
 
+# keyboard management
+def on_press(key):
+	# when a key is pressed
+	try:
+		print(f'alphanumeric key {key} pressed')
+
+	except AttributeError:
+		print(f'special key {key} pressed')
+
+def on_release(key):
+	# when a key is released
+	print(f'{key} released')
+
+	if key == keyboard.Key.esc:
+		# stop listener
+		return False
+
 
 layout = make_layout()
 layout["header"].update(Header())
@@ -182,5 +196,13 @@ with Live(layout, refresh_per_second=10, screen=True):
 		# key input check
 		# TODO(Erton): code with pynput module.
 		# Search for 'pynput monitoring the keyboard'
+
+		listener = keyboard.Listener(
+			on_press=on_press,
+			on_release=on_release
+		)
+		# TODO(Erton): must program the functions for on_press and on_release
+		# NOTE(Erton): on_press and on_release functions have yet to be coded
+		listener.start()
 
 		sleep(0.1)
