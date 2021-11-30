@@ -1697,8 +1697,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
                     """
-                    get_user(conn, ctx.author.id, "user_e{func}")
-                    
+                    stock_user = get_user(conn, ctx.author.id, f"user_e{func}")
+
                     if int(stock_user[0]) >= int(arg1):
                         pass
                     else:
@@ -1708,33 +1708,53 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # si pasas todos los controles y la venta es posible ###########
                     # te paga
+                    """
                     check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
+                    """
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
+                    """
                     check_cr_stock = io.open(f"bolsa/cr/cr_emprs{func}.txt", 'r')
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
+                    """
+                    cr_stock = get_bot(conn, f"e_{func}", "cr")
 
+                    """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                    """
                     ingresos = int(cr_stock[0]) * int(arg1)
                     current_cr = str( int(cr_user[0]) + ingresos )
+                    """
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
+                    """
+                    put_user(conn, ctx.author.id, "user_cr", current_cr)
 
                     # resta las acciones vendidas a las tuyas
+                    """
                     apply_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs{func}.txt", 'w')
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
+                    """
+                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user[0]) - int(arg1))
 
                     # añade esas acciones a las totales
+                    """
                     check_cant_stock = io.open(f"bolsa/cant/cant_emprs{func}.txt", 'r')
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
+                    """
+                    cant_stock = get_bot(conn, f"e_{func}", "cant")
 
+                    """
                     apply_cant_stock = io.open(f"bolsa/cant/cant_emprs{func}.txt", 'w')
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
+                    """
+                    put_bot(conn, f"e_{func}", "cant", int(cant_stock[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
@@ -1768,19 +1788,28 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # CONTROLES ####################################################
                     # mira las acciones disponibles
+                    """
                     check_cant_stock = io.open(f"bolsa/cant/cant_emprs_n_{func}.txt", 'r')
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
+                    """
+                    cant_stock = get_bot(conn, f"e_n{func}", "cant")
 
                     # mira su precio
+                    """
                     check_cr_stock = io.open(f"bolsa/cr/cr_emprs_n_{func}.txt", 'r')
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
+                    """
+                    cr_stock = get_bot(conn, f"e_n{func}", "cr")
 
                     # mira tu saldo
+                    """
                     check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
+                    """
+                    cr_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     # calcula las comisiones
                     comisiones = round( ( int(cr_stock[0]) * int(arg1) ) * 0.1 )
@@ -1800,25 +1829,39 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # si pasas todos los controles y la compra es posible ##########
                     # te cobra el precio de las acciones + comisiones 10%
+                    """
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                    """
                     gastos = int(cr_stock[0]) * int(arg1) + comisiones
                     current_cr = str( int(cr_user[0]) - gastos )
+                    """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
+                    """
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - gastos)
 
                     # resta las acciones compradas a las totales
+                    """
                     apply_cant_stock = io.open(f"bolsa/cant/cant_emprs_n_{func}.txt", 'w')
                     apply_cant_stock.write(str( int(cant_stock[0]) - int(arg1) ))
                     apply_cant_stock.close()
+                    """
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) - int(arg1))
 
                     # añade esas acciones a las tuyas
+                    """
                     check_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_{func}.txt", 'r')
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
+                    """
+                    stock_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
+                    """
                     apply_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_{func}.txt", 'w')
                     apply_stock_user.write(str( int(stock_user[0]) + int(arg1) ))
                     apply_stock_user.close()
+                    """
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Compradas {arg1} acciones de la empresa {func}\nGastos = **{gastos}**"))
@@ -1850,9 +1893,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # CONTROLES ####################################################
                     # mira si tienes las acciones
+                    """
                     check_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_{func}.txt", 'r')
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
+                    """
+                    stock_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     if int(stock_user[0]) >= int(arg1):
                         pass
@@ -1863,33 +1909,53 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # si pasas todos los controles y la venta es posible ###########
                     # te paga
+                    """
                     check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
+                    """
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
+                    """
                     check_cr_stock = io.open(f"bolsa/cr/cr_emprs_n_{func}.txt", 'r')
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
+                    """
+                    cr_stock = get_bot(conn, "e_n{func},", "cr")
 
+                    """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                    """
                     ingresos = int(cr_stock[0]) * int(arg1)
                     current_cr = str( int(cr_user[0]) + ingresos )
+                    """
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
+                    """
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + ingresos)
 
                     # resta las acciones vendidas a las tuyas
+                    """
                     apply_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_{func}.txt", 'w')
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
+                    """
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) - int(arg1))
 
                     # añade esas acciones a las totales
+                    """
                     check_cant_stock = io.open(f"bolsa/cant/cant_emprs_n_{func}.txt", 'r')
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
+                    """
+                    cant_stock = get_bot(conn, f"e_n{func}", "cant")
 
+                    """
                     apply_cant_stock = io.open(f"bolsa/cant/cant_emprs_n_{func}.txt", 'w')
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
+                    """
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
