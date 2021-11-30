@@ -2184,10 +2184,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             if int(cr_user[0]) < 30 and int(emprs1_user[0]) == 0 and int(emprs2_user[0]) == 0 and int(emprs3_user[0]) == 0 and int(emprs4_user[0]) == 0 and int(emprs_n_1_user[0]) == 0 and int(emprs_n_2_user[0]) == 0:
 
                 # pon el dinero
-                apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                
+               
+                """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                 apply_cr_user.write("30")
-                apply_cr_user.close()
-
+                apply_cr_user.close()"""
+                
+                put_user(conn, ctx.author.id, "user_cr","30" )
+                
                 # resta un nivel (menos cuando el nivel es cero)
                 lvl.remove_license(ctx)
 
@@ -2249,10 +2253,11 @@ async def casino(ctx, path = None, arg1 = None):
 
             if allowed == True:
 
-                check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
-                check_cr_user.close()
+                check_cr_user.close()"""
 
+                cr_user = get_user(conn, ctx.author.id , "user_cr" )
                 if int(cr_user[0]) >= 1:
 
                     try:
@@ -2261,26 +2266,34 @@ async def casino(ctx, path = None, arg1 = None):
 
                         if chance == 1:
 
-                            check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                            """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                             cr_user = check_cr_user.readlines()
-                            check_cr_user.close()
+                            check_cr_user.close()"""
 
-                            apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                            cr_user = get_user(conn, ctx.author.id, "user_cr")
+
+                            """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) + 1 ))
-                            apply_cr_user.close()
+                            apply_cr_user.close()"""
+
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":coin: Cara", "¡Sigue así!"))
                             log.logCall("casino moneda", ctx.author.name, True, "Gana")
 
                         else:
 
-                            check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                            """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                             cr_user = check_cr_user.readlines()
-                            check_cr_user.close()
+                            check_cr_user.close()"""
 
-                            apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                            cr_user = get_user(conn,ctx.author.id,"user_cr")
+
+                            """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) - 1 ))
-                            apply_cr_user.close()
+                            apply_cr_user.close()"""
+
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) - 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":x: Cruz", "Mala suerte..."))
                             log.logCall("casino moneda", ctx.author.name, True, "Pierde")
@@ -2328,22 +2341,28 @@ async def casino(ctx, path = None, arg1 = None):
 
             if allowed == True:
 
-                check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
-                check_cr_user.close()
+                check_cr_user.close()"""
+
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user[0]) >= 1:
 
                     try:
 
                         # cobra
-                        check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                        """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                         cr_user = check_cr_user.readlines()
-                        check_cr_user.close()
+                        check_cr_user.close()"""
 
-                        apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                        cr_user = get_user(conn, ctx.author.id, "user_cr" )
+
+                        """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                         apply_cr_user.write(str( int(cr_user[0]) - 1 ))
-                        apply_cr_user.close()
+                        apply_cr_user.close()"""
+
+                        put_user(conn, ctx.author.id, "user_cr" , str( int(cr_user[0]) - 1 ) )
 
                         # lo mete en el bote
                         check_bote = io.open("casino/juego/bote.txt", 'r')
@@ -2380,13 +2399,17 @@ async def casino(ctx, path = None, arg1 = None):
                             bote = int(val_bote[0])
 
                             # te da el bote
-                            check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                            """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                             cr_user = check_cr_user.readlines()
-                            check_cr_user.close()
+                            check_cr_user.close()"""
 
-                            apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+                            cr_user = get_user(conn, ctx.author.id, "user_cr" )
+
+                            """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) + bote ))
-                            apply_cr_user.close()
+                            apply_cr_user.close()"""
+
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + bote ) )
 
                             # reinicia el bote
                             reset_bote = io.open("casino/juego/bote.txt", 'w')
@@ -2445,9 +2468,10 @@ async def casino(ctx, path = None, arg1 = None):
 
                 try:
 
-                    check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
+                    """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                     cr_user = check_cr_user.readlines()
-                    check_cr_user.close()
+                    check_cr_user.close()"""
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                     if int(cr_user[0]) > 1:
 
@@ -2533,10 +2557,14 @@ async def casino(ctx, path = None, arg1 = None):
                         premio = round(1 * multiplier)
 
                         # aplica los cambios economicos
-                        cobro = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
+
+                        #cobro = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                         pago = str( int(cr_user[0]) - 1 + premio )
-                        cobro.write(pago)
-                        cobro.close()
+                        #cobro.write(pago)
+                        #cobro.close() 
+                        
+                        put_user(conn, ctx.author.id, "user_cr", pago)
+                        
 
                         await ctx.send(embed = embedDato(ctx,
                             "Resultado de la partida...",
