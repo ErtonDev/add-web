@@ -1554,7 +1554,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 500000 ) )
                     cobra_cr.close()
                     """
-                    cobra_cr = get_put(conn, ctx.author.id, "user_cr", f"{cr_comparation-500000}")
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1659,7 +1659,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) + int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, ctx.author.id, f"user_e{func}, int(stock_user[0]) + int(arg1))
+                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user) + int(arg1))
 
 
                     # msg
