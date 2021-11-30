@@ -2002,10 +2002,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
             # CONTROLES DE SEGURIDAD PARA MIRAR QUE TODOS LOS ARGUMENTOS SON POSIBLES
             permiso = False
-
+            """
             check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
+            """
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             try:
                 inttester = arg1
@@ -2030,9 +2032,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 permiso = True
 
             try:
+                """
                 check_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             except:
                 permiso = False
@@ -2045,22 +2050,32 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             if permiso == True:
 
                 # te quita dinero
+                """
                 check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
+                """
                 apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) - int(arg1) ))
                 apply_cr_user.close()
+                """
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - int(arg1))
 
                 # da el dinero
+                """
                 check_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'r')
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
+                """
 
+                """
                 apply_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
+                """
 
                 # cuenta que has hecho la transacción
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
