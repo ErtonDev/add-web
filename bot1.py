@@ -388,17 +388,23 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
             # mira si tiene cuenta
             try:
                 # encuentra el archivo y lo lee
+                """
                 archivo = io.open(f"profile/{person}_profile/points.txt", 'r')
                 puntos = archivo.readlines()
                 archivo.close()
+                """
+                puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
                 if int(puntos[0]) >= 0 and int(puntos[0]) + 1 <= 15:
 
+                    """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
                     archivo.write("")
                     archivo.write(str(int(puntos[0]) + 1))
                     archivo.close()
+                    """
+                    put_user(conn, person, "user_pt", int(puntos[0]) + 1)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Entrega de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) + 1)}**"))
@@ -447,28 +453,35 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
             # mira si tiene cuenta
             try:
                 # encuentra el archivo y lo lee
+                """
                 archivo = io.open(f"profile/{person}_profile/points.txt", 'r')
                 puntos = archivo.readlines()
                 archivo.close()
+                """
+                puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
                 if int(puntos[0]) >= 3:
-
+                    """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
                     archivo.write("")
                     archivo.write(str(int(puntos[0]) - 3))
                     archivo.close()
+                    """
+                    put_user(conn, person, "user_pt", int(puntos[0]) - 3)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) - 3)}**"))
                     log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, f"De {puntos[0]} a {str(int(puntos[0]) - 3)}")
 
                 elif int(puntos[0]) < 3 and int(puntos[0]) != 0:
-
+                    """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
                     archivo.write("")
                     archivo.write("0")
                     archivo.close()
+                    """
+                    put_user(conn, person, "user_pt", 0)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **0**"))
@@ -660,8 +673,11 @@ async def rol(ctx, role = "none"):
     with_account = True
 
     try:
+        """
         profile_existence = io.open(f"{ctx.author.id}_profile.txt", 'r')
         profile_existence.close()
+        """
+        get(conn, ctx.author.id, "user_id") #el user_id es solo para coger algo y probar si va
 
     except FileNotFoundError:
         with_account = False
@@ -772,27 +788,43 @@ async def perfil(ctx, who = "Me"):
     try:
 
         # puntos
+        """
         encuentra_puntos = io.open(f"profile/{person}_profile/points.txt", 'r')
         cantidad_puntos = encuentra_puntos.readlines()
         encuentra_puntos.close()
+        """
+        cantidad_puntos = get_user(conn, person, "user_pt")
+
         points = cantidad_puntos[0]
 
         # credits
+        """
         encuentra_credit = io.open(f"profile/{person}_profile/credit.txt", 'r')
         cantidad_credit = encuentra_credit.readlines()
         encuentra_credit.close()
+        """
+        cantidad_credit = get_user(conn, person, "user_cr")
+
         credit = cantidad_credit[0]
 
         # nivel
+        """
         encuentra_level = io.open(f"profile/{person}_profile/level.txt", 'r')
         cantidad_level = encuentra_level.readlines()
         encuentra_level.close()
+        """
+        cantidad_level = get_user(conn, person, "user_lvl")
+
         level = cantidad_level[0]
 
         # prestige
+        """
         encuentra_prestige = io.open(f"profile/{person}_profile/prestige.txt", 'r')
         cantidad_prestige = encuentra_prestige.readlines()
         encuentra_prestige.close()
+        """
+        cantidad_prestige = get_user(conn, person, "user_prestige")
+
         if cantidad_prestige[0] == "x" or cantidad_prestige[0] == "x\n":
             prestige = ""
         elif cantidad_prestige[0] == "x*" or cantidad_prestige[0] == "x*\n":
@@ -891,8 +923,10 @@ async def registro(ctx):
 
     # la cuenta ya existe
     try:
-        #confirmation = io.open(f"profile/{ctx.author.id}_profile/points.txt", 'r')
-        #confirmation.close()
+        """
+        confirmation = io.open(f"profile/{ctx.author.id}_profile/points.txt", 'r')
+        confirmation.close()
+        """
 
         confirmation = get_user(conn, ctx.author.id, "user_pt")
 
@@ -903,7 +937,7 @@ async def registro(ctx):
     except:
         # carpeta
         #create_profile = os.makedirs(f"profile/{ctx.author.id}_profile", exist_ok = True)
-        create_profile = post_user(conn, ctx.author.id, ctx.author.name, 30, 0, 0, 0, 0, 0, 0, 0, 15, "x", 0)
+        post_user(conn, ctx.author.id, ctx.author.name, 30, 0, 0, 0, 0, 0, 0, 0, 15, "x", 0)
 
         """
         # archivos
@@ -1463,7 +1497,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 500 ) )
                     cobra_cr.close()
                     """
-                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1478,7 +1512,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.close()
                     """
 
-                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-2500}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-2500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1492,7 +1526,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 10000 ) )
                     cobra_cr.close()
                     """
-                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-10000}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-10000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1921,7 +1955,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
                     """
-                    cr_stock = get_bot(conn, "e_n{func},", "cr")
+                    cr_stock = get_bot(conn, f"e_n{func},", "cr")
 
                     """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
@@ -2070,21 +2104,29 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 """
                 apply_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
                 """
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + int(arg1))
 
                 # cuenta que has hecho la transacción
+                """
                 check_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'r')
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
+                """
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
+                """
                 apply_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'w')
                 apply_transac_user.write(str( int(transac_user[0]) + 1 ))
                 apply_transac_user.close()
+                """
+                put_user(conn, ctx.author.id, "user_transac", int(transac_user[0]) + 1)
 
                 # manda el mensaje
                 await ctx.send(embed = embedDato(ctx, "La transacción ha sido llevada a cabo con éxito", f"La cuenta del usuario indicado ha recibido **{arg1}** créditos."))
@@ -2099,6 +2141,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
         try:
             # revisa que no exista ninguna forma de ganar dinero
             # aka acciones por vender
+            """
             check_emprs1_user = io.open(f"profile/{ctx.author.id}_profile/emprs1.txt", 'r')
             emprs1_user = check_emprs1_user.readlines()
             check_emprs1_user.close()
@@ -2122,11 +2165,21 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             check_emprs_n_2_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_2.txt", 'r')
             emprs_n_2_user = check_emprs_n_2_user.readlines()
             check_emprs_n_2_user.close()
+            """
+            emprs1_user = get_user(conn, ctx.author.id, "user_e1")
+            emprs2_user = get_user(conn, ctx.author.id, "user_e2")
+            emprs3_user = get_user(conn, ctx.author.id, "user_e3")
+            emprs4_user = get_user(conn, ctx.author.id, "user_e4")
+            emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+            emprs_n_2_user = get_user(conn, ctx.author.id, "user_n2")
 
             # revisa el dinero
+            """
             check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
+            """
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             if int(cr_user[0]) < 30 and int(emprs1_user[0]) == 0 and int(emprs2_user[0]) == 0 and int(emprs3_user[0]) == 0 and int(emprs4_user[0]) == 0 and int(emprs_n_1_user[0]) == 0 and int(emprs_n_2_user[0]) == 0:
 
