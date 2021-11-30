@@ -70,10 +70,10 @@ while True:
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-            put_bot(conn, "e_1", "cr", min_1)
+            put_bot(conn, "'e_1'", "cr", min_1)
 
         else:
-            put_bot(conn, "e_1", "cr", int(cr1[0]) - diferencia)
+            put_bot(conn, "'e_1'", "cr", int(cr1[0]) - diferencia)
 
     # empresa 2 ################################################################
 
@@ -81,7 +81,7 @@ while True:
     diferencia = random.randint(1, margin_2)
 
     # datos
-    cr2 = get_bot(conn, "e_2", "cr")
+    cr2 = get_bot(conn, "'e_2'", "cr")
 
     # suma o resta
     if int(cr2[0]) <= min_2 + margin_2:
@@ -96,15 +96,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_2", "cr", int(cr2[0]) + diferencia)
+        put_bot(conn, "'e_2'", "cr", int(cr2[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-            put_bot(conn, "e_2", "cr", min_2)
+            put_bot(conn, "'e_2'", "cr", min_2)
 
         else:
-            put_bot(conn, "e_2", "cr", int(cr2[0]) - diferencia)
+            put_bot(conn, "'e_2'", "cr", int(cr2[0]) - diferencia)
 
     # empresa 3 ################################################################
 
@@ -112,7 +112,7 @@ while True:
     diferencia = random.randint(1, margin_3)
 
     # datos
-    cr3 = get_bot(conn, "e_3", "cr")
+    cr3 = get_bot(conn, "'e_3'", "cr")
 
     # suma o resta
     if int(cr3[0]) <= min_3 + margin_3:
@@ -127,15 +127,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_3", "cr", int(cr3[0]) + diferencia)
+        put_bot(conn, "'e_3'", "cr", int(cr3[0]) + diferencia)
 
     else:
 
         if int(cr1[0]) - diferencia <= 5:
-            put_bot(conn, "e_3", "cr", min_3)
+            put_bot(conn, "'e_3'", "cr", min_3)
 
         else:
-            put_bot(conn, "e_3", "cr", int(cr3[0]) - diferencia)
+            put_bot(conn, "'e_3'", "cr", int(cr3[0]) - diferencia)
 
     # empresa 4 ################################################################
 
