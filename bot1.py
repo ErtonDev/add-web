@@ -1692,10 +1692,13 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
 
                     # CONTROLES ####################################################
                     # mira si tienes las acciones
+                    """
                     check_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs{func}.txt", 'r')
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
-
+                    """
+                    get_user(conn, ctx.author.id, "user_e{func}")
+                    
                     if int(stock_user[0]) >= int(arg1):
                         pass
                     else:
