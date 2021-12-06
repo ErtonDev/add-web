@@ -14,14 +14,14 @@ class License_manager():
     conn = connect()
     # NOTE: Determina el nivel actual del usuario
     def determinate_license(self, ctx):
-        actual_level = get_user(conn, f"'{ctx.author.id}'", "user_lvl")
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
         return level
 
     # NOTE: Revisa que se cumplan los requisitos esperados del usuario por su nivel de licencia
     def check_license(self, ctx, lvl_num):
-        actual_level = get_user(conn, f"'{ctx.author.id}'", "user_lvl")
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
 
@@ -45,7 +45,7 @@ class License_manager():
     # NOTE: Dar licencia
     def asign_license(self, ctx):
         # calcula el siguiente nivel
-        actual_level = get_user(conn, f"'{ctx.author.id}'", "user_lvl")
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
         next_level = int(level) + 1
@@ -56,29 +56,29 @@ class License_manager():
         if next_level != 5:
 
             # siguiente nivel
-            put_user(conn, f"'{ctx.author.id}'", "user_lvl", next_level)
+            put_user(conn, ctx.author.id, "user_lvl", next_level)
 
             # transacciones a cero
-            put_user(conn, f"'{ctx.author.id}'", "user_transac", 0)
+            put_user(conn, ctx.author.id, "user_transac", 0)
 
         else:
             # reinicia la cuenta
             # lvl
-            put_user(conn, f"'{ctx.author.id}'", "user_lvl", 0)
+            put_user(conn, ctx.author.id, "user_lvl", 0)
 
             # credit
-            put_user(conn, f"'{ctx.author.id}'", "user_cr", 30)
+            put_user(conn, ctx.author.id, "user_cr", 30)
 
             # transac
-            put_user(conn, f"'{ctx.author.id}'", "user_transac", 0)
+            put_user(conn, ctx.author.id, "user_transac", 0)
 
             # prestigio
-            put_user(conn, f"'{ctx.author.id}'", "user_prestige", "*")
+            put_user(conn, ctx.author.id, "user_prestige", "*")
 
     # NOTE: Quita un nivel
     def remove_license(self, ctx):
         # lee el nivel
-        actual_level = get_user(conn, f"'{ctx.author.id}'", "user_lvl")
+        actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
         level = actual_level[0]
 
@@ -88,4 +88,4 @@ class License_manager():
 
         else:
             # en caso de no serlo resta uno
-            put_user(conn, f"'{ctx.author.id}'", "user_lvl", int(level) - 1)
+            put_user(conn, ctx.author.id, "user_lvl", int(level) - 1)

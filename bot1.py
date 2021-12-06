@@ -32,6 +32,7 @@ os.system('clear')
 colorama.init(autoreset=True)
 log = Log()
 
+# api
 conn = connect()
 
 # license manager / levels
@@ -54,6 +55,7 @@ async def on_ready():
 
 # error handler
 # WARNING: Comentar al probar nuevas implementaciones para ver errores
+'''
 @client.event
 async def on_command_error(ctx, error):
 
@@ -75,7 +77,7 @@ async def on_command_error(ctx, error):
     # si el comando no está contemplado
     if isinstance(error, commands.CommandNotFound):
         log.logFail("N/A", ctx.author.name, "CommandNotFoundError")
-
+'''
 # backgorund task
 @tasks.loop(seconds=5)
 async def change_status():
@@ -393,7 +395,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                 puntos = archivo.readlines()
                 archivo.close()
                 """
-                puntos = get_user(conn, f"'{person}'", "user_pt")
+                puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
                 if int(puntos[0]) >= 0 and int(puntos[0]) + 1 <= 15:
@@ -404,7 +406,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     archivo.write(str(int(puntos[0]) + 1))
                     archivo.close()
                     """
-                    put_user(conn, f"'{person}'", "user_pt", int(puntos[0]) + 1)
+                    put_user(conn, person, "user_pt", int(puntos[0]) + 1)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Entrega de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) + 1)}**"))
@@ -458,7 +460,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                 puntos = archivo.readlines()
                 archivo.close()
                 """
-                puntos = get_user(conn, f"'{person}'", "user_pt")
+                puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
                 if int(puntos[0]) >= 3:
@@ -468,7 +470,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     archivo.write(str(int(puntos[0]) - 3))
                     archivo.close()
                     """
-                    put_user(conn, f"'{person}'", "user_pt", int(puntos[0]) - 3)
+                    put_user(conn, person, "user_pt", int(puntos[0]) - 3)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) - 3)}**"))
@@ -481,7 +483,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     archivo.write("0")
                     archivo.close()
                     """
-                    put_user(conn, f"'{person}'", "user_pt", 0)
+                    put_user(conn, person, "user_pt", 0)
 
                     # mensaje y log
                     await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **0**"))
@@ -677,7 +679,7 @@ async def rol(ctx, role = "none"):
         profile_existence = io.open(f"{ctx.author.id}_profile.txt", 'r')
         profile_existence.close()
         """
-        get_user(conn, f"'{ctx.author.id}'", "user_id") #el user_id es solo para coger algo y probar si va
+        get(conn, ctx.author.id, "user_id") #el user_id es solo para coger algo y probar si va
 
     except FileNotFoundError:
         with_account = False
@@ -793,7 +795,7 @@ async def perfil(ctx, who = "Me"):
         cantidad_puntos = encuentra_puntos.readlines()
         encuentra_puntos.close()
         """
-        cantidad_puntos = get_user(conn, f"'{person}'", "user_pt")
+        cantidad_puntos = get_user(conn, person, "user_pt")
 
         points = cantidad_puntos[0]
 
@@ -803,7 +805,7 @@ async def perfil(ctx, who = "Me"):
         cantidad_credit = encuentra_credit.readlines()
         encuentra_credit.close()
         """
-        cantidad_credit = get_user(conn, f"'{person}'", "user_cr")
+        cantidad_credit = get_user(conn, person, "user_cr")
 
         credit = cantidad_credit[0]
 
@@ -813,7 +815,7 @@ async def perfil(ctx, who = "Me"):
         cantidad_level = encuentra_level.readlines()
         encuentra_level.close()
         """
-        cantidad_level = get_user(conn, f"'{person}'", "user_lvl")
+        cantidad_level = get_user(conn, person, "user_lvl")
 
         level = cantidad_level[0]
 
@@ -823,7 +825,7 @@ async def perfil(ctx, who = "Me"):
         cantidad_prestige = encuentra_prestige.readlines()
         encuentra_prestige.close()
         """
-        cantidad_prestige = get_user(conn, f"'{person}'", "user_prestige")
+        cantidad_prestige = get_user(conn, person, "user_prestige")
 
         if cantidad_prestige[0] == "x" or cantidad_prestige[0] == "x\n":
             prestige = ""
@@ -1115,20 +1117,20 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             read_cr_emprs4.close()
             """
 
-            actual_cant_emprs1 = get_user(conn, f"'{ctx.author.id}'", "user_e1")
-            actual_cant_emprs2 = get_user(conn, f"'{ctx.author.id}'", "user_e2")
-            actual_cant_emprs3 = get_user(conn, f"'{ctx.author.id}'", "user_e3")
-            actual_cant_emprs4 = get_user(conn, f"'{ctx.author.id}'", "user_e4")
+            actual_cant_emprs1 = get_user(conn, ctx.author.id, "user_e1")
+            actual_cant_emprs2 = get_user(conn, ctx.author.id, "user_e2")
+            actual_cant_emprs3 = get_user(conn, ctx.author.id, "user_e3")
+            actual_cant_emprs4 = get_user(conn, ctx.author.id, "user_e4")
 
-            actual_stock_emprs1 = get_bot(conn, "'e_1'", "cant")
-            actual_stock_emprs2 = get_bot(conn, "'e_2'", "cant")
-            actual_stock_emprs3 = get_bot(conn, "'e_3'", "cant")
-            actual_stock_emprs4 = get_bot(conn, "'e_4'", "cant")
+            actual_stock_emprs1 = get_bot(conn, "e_1", "cant")
+            actual_stock_emprs2 = get_bot(conn, "e_2", "cant")
+            actual_stock_emprs3 = get_bot(conn, "e_3", "cant")
+            actual_stock_emprs4 = get_bot(conn, "e_4", "cant")
 
-            actual_cr_emprs1 = get_bot(conn, "'e_1'", "cr")
-            actual_cr_emprs2 = get_bot(conn, "'e_2'", "cr")
-            actual_cr_emprs3 = get_bot(conn, "'e_3'", "cr")
-            actual_cr_emprs4 = get_bot(conn, "'e_4'", "cr")
+            actual_cr_emprs1 = get_bot(conn, "e_1", "cr")
+            actual_cr_emprs2 = get_bot(conn, "e_2", "cr")
+            actual_cr_emprs3 = get_bot(conn, "e_3", "cr")
+            actual_cr_emprs4 = get_bot(conn, "e_4", "cr")
 
             # embed
             embed = discord.Embed(
@@ -1213,14 +1215,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 read_cr_emprs_n_2.close()
                 """
 
-                actual_cant_emprs_n_1 = get_user(conn, f"'{ctx.author.id}'", "user_n1")
-                actual_cant_emprs_n_2 = get_user(conn, f"'{ctx.author.id}'", "user_n2")
+                actual_cant_emprs_n_1 = get_user(conn, ctx.author.id, "user_n1")
+                actual_cant_emprs_n_2 = get_user(conn, ctx.author.id, "user_n2")
 
-                actual_stock_emprs_n_1 = get_bot(conn, "'e_n1'", "cant")
-                actual_stock_emprs_n_2 = get_bot(conn, "'e_n2'", "cant")
+                actual_stock_emprs_n_1 = get_bot(conn, "e_n1", "cant")
+                actual_stock_emprs_n_2 = get_bot(conn, "e_n2", "cant")
 
-                actual_cr_emprs_n_1 = get_bot(conn, "'e_n1'", "cr")
-                actual_cr_emprs_n_2 = get_bot(conn, "'e_n2'", "cr")
+                actual_cr_emprs_n_1 = get_bot(conn, "e_n1", "cr")
+                actual_cr_emprs_n_2 = get_bot(conn, "e_n2", "cr")
 
                 # embed
                 embed = discord.Embed(
@@ -1279,7 +1281,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 check_cr_user.close()
                 """
 
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user) >= 500:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -1292,7 +1294,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+                transac_user = get_user(conn, ctx.author.name, "user_transac")
 
                 if int(transac_user) >= 10:
                     completion2 = ":white_check_mark: -> *Completado*"
@@ -1311,7 +1313,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.name, "user_cr")
 
                 if int(cr_user) >= 2500:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -1324,7 +1326,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
                 if int(transac_user) >= 25:
                     completion2 = ":white_check_mark: -> *Completado*"
@@ -1343,7 +1345,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user) >= 10000:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -1356,7 +1358,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
                 if int(transac_user) >= 50:
                     completion2 = ":white_check_mark: -> *Completado*"
@@ -1375,7 +1377,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user) >= 100000:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -1388,7 +1390,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
                 if int(transac_user) >= 100:
                     completion2 = ":white_check_mark: -> *Completado*"
@@ -1407,7 +1409,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user) >= 500000:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -1440,12 +1442,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
                 """
-                emprs1_user    = get_user(conn, f"'{ctx.author.id}'", "user_e1")
-                emprs2_user    = get_user(conn, f"'{ctx.author.id}'", "user_e2")
-                emprs3_user    = get_user(conn, f"'{ctx.author.id}'", "user_e3")
-                emprs4_user    = get_user(conn, f"'{ctx.author.id}'", "user_e4")
-                emprs_n_1_user = get_user(conn, f"'{ctx.author.id}'", "user_n1")
-                emprs_n_2_user = get_user(conn, f"'{ctx.author.id}'", "user_n2")
+                emprs1_user    = get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user    = get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user    = get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user    = get_user(conn, ctx.author.id, "user_e4")
+                emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+                emprs_n_2_user = get_user(conn, ctx.author.id, "user_n2")
 
 
                 if emprs1_user == "0" and emprs2_user == "0" and emprs3_user == "0" and emprs4_user == "0" and emprs_n_1_user == "0" and emprs_n_2_user == "0":
@@ -1473,7 +1475,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
             """
-            cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             cr_comparation = int(cr_user)
 
@@ -1483,7 +1485,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             transac_user = check_transac_user.readlines()
             check_transac_user.close()
             """
-            transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+            transac_user = get_user(conn, ctx.author.id, "user_transac")
 
             transac_comparation = int(transac_user)
 
@@ -1497,7 +1499,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 500 ) )
                     cobra_cr.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", f"{cr_comparation-500}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1512,7 +1514,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.close()
                     """
 
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", f"{cr_comparation-2500}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-2500}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1526,7 +1528,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 10000 ) )
                     cobra_cr.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", f"{cr_comparation-10000}")
+                    put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-10000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1540,7 +1542,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 100000 ) )
                     cobra_cr.close()
                     """
-                    cobra_cr = put_user(conn, f"'{ctx.author.id}'", "user_cr", f"{cr_comparation-100000}")
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-100000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1575,12 +1577,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 emprs_n_2_user = check_emprs_n_2_user.readlines()
                 check_emprs_n_2_user.close()
                 """
-                emprs1_user    = get_user(conn, f"'{ctx.author.id}'", "user_e1")
-                emprs2_user    = get_user(conn, f"'{ctx.author.id}'", "user_e2")
-                emprs3_user    = get_user(conn, f"'{ctx.author.id}'", "user_e3")
-                emprs4_user    = get_user(conn, f"'{ctx.author.id}'", "user_e4")
-                emprs_n_1_user = get_user(conn, f"'{ctx.author.id}'", "user_n1")
-                emprs_n_2_user = get_user(conn, f"'{ctx.author.id}'", "user_n1")
+                emprs1_user    = get_user(conn, ctx.author.id, "user_e1")
+                emprs2_user    = get_user(conn, ctx.author.id, "user_e2")
+                emprs3_user    = get_user(conn, ctx.author.id, "user_e3")
+                emprs4_user    = get_user(conn, ctx.author.id, "user_e4")
+                emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+                emprs_n_2_user = get_user(conn, ctx.author.id, "user_n1")
 
                 if cr_comparation >= 500000 and emprs1_user == 0 and emprs2_user == 0 and emprs3_user == 0 and emprs4_user == 0 and emprs_n_1_user == 0 and emprs_n_2_user == 0:
                     """
@@ -1588,7 +1590,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cobra_cr.write( str( cr_comparation - 500000 ) )
                     cobra_cr.close()
                     """
-                    cobra_cr = put_user(conn, f"'{ctx.author.id}'", "user_cr", f"{cr_comparation-500000}")
+                    cobra_cr = put_user(conn, ctx.author.id, "user_cr", f"{cr_comparation-500000}")
                 else:
                     await ctx.send(embed = embedDato(ctx, "No cumples los requisitos.", "Revisa las condiciones para subir de nivel con **.banco nivel**", "gold"))
                     log.logFail("banco nivel mejora", ctx.author.name, "NotAllowedError")
@@ -1625,7 +1627,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
                     """
-                    cant_stock = get_bot(conn, f"'e_{func}'", "cant")
+                    cant_stock = get_bot(conn, f"e_{func}", "cant")
 
                     # mira su precio
                     """
@@ -1633,7 +1635,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
                     """
-                    cr_stock = get_bot(conn, f"'e_{func}'", "cr")
+                    cr_stock = get_bot(conn, f"e_{func}", "cr")
 
                     # mira tu saldo
                     """
@@ -1641,7 +1643,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
                     """
-                    cr_user = get_user(conn, f"'{ctx.author.id}'", "cr")
+                    cr_user = get_user(conn, ctx.author.id, "cr")
 
                     # calcula las comisiones
                     comisiones = round( ( int(cr_stock[0]) * int(arg1) ) * 0.1 )
@@ -1670,7 +1672,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
                     """
-                    put_bot(conn, f"'e_{func}''", "cr", int(current_cr))
+                    put_bot(conn, f"e_{func}", "cr", int(current_cr))
 
                     # resta las acciones compradas a las totales
                     """
@@ -1678,7 +1680,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) - int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"'e_{func}'", "cant", int(cant_stock[0]) - int(arg1))
+                    put_bot(conn, f"e_{func}", "cant", int(cant_stock[0]) - int(arg1))
 
                     # añade esas acciones a las tuyas
                     """
@@ -1686,14 +1688,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
                     """
-                    stock_user = get_user(conn, f"'{ctx.author.id}'", f"user_e{func}")
+                    stock_user = get_user(conn, ctx.author.id, f"user_e{func}")
 
                     """
                     apply_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs{func}.txt", 'w')
                     apply_stock_user.write(str( int(stock_user[0]) + int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", f"user_e{func}", int(stock_user) + int(arg1))
+                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user) + int(arg1))
 
 
                     # msg
@@ -1731,7 +1733,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
                     """
-                    stock_user = get_user(conn, f"'{ctx.author.id}'", f"user_e{func}")
+                    stock_user = get_user(conn, ctx.author.id, f"user_e{func}")
 
                     if int(stock_user[0]) >= int(arg1):
                         pass
@@ -1747,14 +1749,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
                     """
-                    cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                     """
                     check_cr_stock = io.open(f"bolsa/cr/cr_emprs{func}.txt", 'r')
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
                     """
-                    cr_stock = get_bot(conn, f"'e_{func}'", "cr")
+                    cr_stock = get_bot(conn, f"e_{func}", "cr")
 
                     """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
@@ -1765,7 +1767,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", current_cr)
+                    put_user(conn, ctx.author.id, "user_cr", current_cr)
 
                     # resta las acciones vendidas a las tuyas
                     """
@@ -1773,7 +1775,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", f"user_e{func}", int(stock_user[0]) - int(arg1))
+                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user[0]) - int(arg1))
 
                     # añade esas acciones a las totales
                     """
@@ -1781,14 +1783,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
                     """
-                    cant_stock = get_bot(conn, f"'e_{func}'", "cant")
+                    cant_stock = get_bot(conn, f"e_{func}", "cant")
 
                     """
                     apply_cant_stock = io.open(f"bolsa/cant/cant_emprs{func}.txt", 'w')
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"'e_{func}'", "cant", int(cant_stock[0]) + int(arg1))
+                    put_bot(conn, f"e_{func}", "cant", int(cant_stock[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
@@ -1827,7 +1829,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cant_stock = check_cant_stock.readlines()
                     check_cant_stock.close()
                     """
-                    cant_stock = get_bot(conn, f"'e_n{func}'", "cant")
+                    cant_stock = get_bot(conn, f"e_n{func}", "cant")
 
                     # mira su precio
                     """
@@ -1835,7 +1837,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
                     """
-                    cr_stock = get_bot(conn, f"'e_n{func}'", "cr")
+                    cr_stock = get_bot(conn, f"e_n{func}", "cr")
 
                     # mira tu saldo
                     """
@@ -1843,7 +1845,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
                     """
-                    cr_user = get_user(conn, f"'{ctx.author.id}'", f"user_n{func}")
+                    cr_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     # calcula las comisiones
                     comisiones = round( ( int(cr_stock[0]) * int(arg1) ) * 0.1 )
@@ -1872,7 +1874,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", int(cr_user[0]) - gastos)
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - gastos)
 
                     # resta las acciones compradas a las totales
                     """
@@ -1880,7 +1882,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) - int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"'e_n{func}'", "cant", int(cant_stock[0]) - int(arg1))
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) - int(arg1))
 
                     # añade esas acciones a las tuyas
                     """
@@ -1888,14 +1890,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
                     """
-                    stock_user = get_user(conn, f"'{ctx.author.id}'", f"user_n{func}")
+                    stock_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     """
                     apply_stock_user = io.open(f"profile/{ctx.author.id}_profile/emprs_n_{func}.txt", 'w')
                     apply_stock_user.write(str( int(stock_user[0]) + int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", f"user_n{func}", int(stock_user[0]) + int(arg1))
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Compradas {arg1} acciones de la empresa {func}\nGastos = **{gastos}**"))
@@ -1932,7 +1934,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     stock_user = check_stock_user.readlines()
                     check_stock_user.close()
                     """
-                    stock_user = get_user(conn, f"'{ctx.author.id}'", f"user_n{func}")
+                    stock_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     if int(stock_user[0]) >= int(arg1):
                         pass
@@ -1948,14 +1950,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
                     """
-                    cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                     """
                     check_cr_stock = io.open(f"bolsa/cr/cr_emprs_n_{func}.txt", 'r')
                     cr_stock = check_cr_stock.readlines()
                     check_cr_stock.close()
                     """
-                    cr_stock = get_bot(conn, f"'e_n{func}'", "cr")
+                    cr_stock = get_bot(conn, f"e_n{func},", "cr")
 
                     """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
@@ -1966,7 +1968,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", "user_cr", int(cr_user[0]) + ingresos)
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + ingresos)
 
                     # resta las acciones vendidas a las tuyas
                     """
@@ -1974,7 +1976,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, f"'{ctx.author.id}'", f"user_n{func}", int(stock_user[0]) - int(arg1))
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) - int(arg1))
 
                     # añade esas acciones a las totales
                     """
@@ -1989,7 +1991,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"'e_n{func}'", "cant", int(cant_stock[0]) + int(arg1))
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
@@ -2041,7 +2043,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
             """
-            cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             try:
                 inttester = arg1
@@ -2071,7 +2073,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             except:
                 permiso = False
@@ -2089,14 +2091,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 """
                 apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) - int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, f"'{ctx.author.id}'", "user_cr", int(cr_user[0]) - int(arg1))
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - int(arg1))
 
                 # da el dinero
                 """
@@ -2104,14 +2106,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 """
                 apply_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, f"'{ctx.author.id}'", "user_cr", int(cr_user[0]) + int(arg1))
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + int(arg1))
 
                 # cuenta que has hecho la transacción
                 """
@@ -2119,14 +2121,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, f"'{ctx.author.id}'", "user_transac")
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
                 """
                 apply_transac_user = io.open(f"profile/{ctx.author.id}_profile/transac.txt", 'w')
                 apply_transac_user.write(str( int(transac_user[0]) + 1 ))
                 apply_transac_user.close()
                 """
-                put_user(conn, f"'{ctx.author.id}'", "user_transac", int(transac_user[0]) + 1)
+                put_user(conn, ctx.author.id, "user_transac", int(transac_user[0]) + 1)
 
                 # manda el mensaje
                 await ctx.send(embed = embedDato(ctx, "La transacción ha sido llevada a cabo con éxito", f"La cuenta del usuario indicado ha recibido **{arg1}** créditos."))
@@ -2166,12 +2168,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             emprs_n_2_user = check_emprs_n_2_user.readlines()
             check_emprs_n_2_user.close()
             """
-            emprs1_user = get_user(conn, f"'{ctx.author.id}'", "user_e1")
-            emprs2_user = get_user(conn, f"'{ctx.author.id}'", "user_e2")
-            emprs3_user = get_user(conn, f"'{ctx.author.id}'", "user_e3")
-            emprs4_user = get_user(conn, f"'{ctx.author.id}'", "user_e4")
-            emprs_n_1_user = get_user(conn, f"'{ctx.author.id}'", "user_n1")
-            emprs_n_2_user = get_user(conn, f"'{ctx.author.id}'", "user_n2")
+            emprs1_user = get_user(conn, ctx.author.id, "user_e1")
+            emprs2_user = get_user(conn, ctx.author.id, "user_e2")
+            emprs3_user = get_user(conn, ctx.author.id, "user_e3")
+            emprs4_user = get_user(conn, ctx.author.id, "user_e4")
+            emprs_n_1_user = get_user(conn, ctx.author.id, "user_n1")
+            emprs_n_2_user = get_user(conn, ctx.author.id, "user_n2")
 
             # revisa el dinero
             """
@@ -2179,18 +2181,16 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             cr_user = check_cr_user.readlines()
             check_cr_user.close()
             """
-            cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
             if int(cr_user[0]) < 30 and int(emprs1_user[0]) == 0 and int(emprs2_user[0]) == 0 and int(emprs3_user[0]) == 0 and int(emprs4_user[0]) == 0 and int(emprs_n_1_user[0]) == 0 and int(emprs_n_2_user[0]) == 0:
 
                 # pon el dinero
-
-
                 """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                 apply_cr_user.write("30")
                 apply_cr_user.close()"""
 
-                put_user(conn, f"'{ctx.author.id}'", "user_cr","30" )
+                put_user(conn, ctx.author.id, "user_cr","30" )
 
                 # resta un nivel (menos cuando el nivel es cero)
                 lvl.remove_license(ctx)
@@ -2257,7 +2257,7 @@ async def casino(ctx, path = None, arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()"""
 
-                cr_user = get_user(conn, f"'{ctx.author.id}'" , "user_cr" )
+                cr_user = get_user(conn, ctx.author.id , "user_cr" )
                 if int(cr_user[0]) >= 1:
 
                     try:
@@ -2270,13 +2270,13 @@ async def casino(ctx, path = None, arg1 = None):
                             cr_user = check_cr_user.readlines()
                             check_cr_user.close()"""
 
-                            cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                            cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                             """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) + 1 ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, f"'{ctx.author.id}'", "user_cr", str( int(cr_user[0]) + 1 ))
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":coin: Cara", "¡Sigue así!"))
                             log.logCall("casino moneda", ctx.author.name, True, "Gana")
@@ -2287,13 +2287,13 @@ async def casino(ctx, path = None, arg1 = None):
                             cr_user = check_cr_user.readlines()
                             check_cr_user.close()"""
 
-                            cr_user = get_user(conn,f"'{ctx.author.id}'","user_cr")
+                            cr_user = get_user(conn,ctx.author.id,"user_cr")
 
                             """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) - 1 ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, f"'{ctx.author.id}'", "user_cr", str( int(cr_user[0]) - 1 ))
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) - 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":x: Cruz", "Mala suerte..."))
                             log.logCall("casino moneda", ctx.author.name, True, "Pierde")
@@ -2345,7 +2345,7 @@ async def casino(ctx, path = None, arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()"""
 
-                cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user[0]) >= 1:
 
@@ -2356,13 +2356,13 @@ async def casino(ctx, path = None, arg1 = None):
                         cr_user = check_cr_user.readlines()
                         check_cr_user.close()"""
 
-                        cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr" )
+                        cr_user = get_user(conn, ctx.author.id, "user_cr" )
 
                         """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                         apply_cr_user.write(str( int(cr_user[0]) - 1 ))
                         apply_cr_user.close()"""
 
-                        put_user(conn, f"'{ctx.author.id}'", "user_cr" , str( int(cr_user[0]) - 1 ) )
+                        put_user(conn, ctx.author.id, "user_cr" , str( int(cr_user[0]) - 1 ) )
 
                         # lo mete en el bote
                         check_bote = io.open("casino/juego/bote.txt", 'r')
@@ -2403,13 +2403,13 @@ async def casino(ctx, path = None, arg1 = None):
                             cr_user = check_cr_user.readlines()
                             check_cr_user.close()"""
 
-                            cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr" )
+                            cr_user = get_user(conn, ctx.author.id, "user_cr" )
 
                             """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                             apply_cr_user.write(str( int(cr_user[0]) + bote ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, f"'{ctx.author.id}'", "user_cr", str( int(cr_user[0]) + bote ) )
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + bote ) )
 
                             # reinicia el bote
                             reset_bote = io.open("casino/juego/bote.txt", 'w')
@@ -2471,7 +2471,7 @@ async def casino(ctx, path = None, arg1 = None):
                     """check_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'r')
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()"""
-                    cr_user = get_user(conn, f"'{ctx.author.id}'", "user_cr")
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                     if int(cr_user[0]) > 1:
 
@@ -2563,7 +2563,7 @@ async def casino(ctx, path = None, arg1 = None):
                         #cobro.write(pago)
                         #cobro.close()
 
-                        put_user(conn, f"'{ctx.author.id}'", "user_cr", pago)
+                        put_user(conn, ctx.author.id, "user_cr", pago)
 
 
                         await ctx.send(embed = embedDato(ctx,
@@ -2613,4 +2613,4 @@ async def casino(ctx, path = None, arg1 = None):
 
 ## SERVER - BOT > IP (token)
 ################################################################################
-client.run('Secret Token, ni de coña la pongo aquí que me tumban el server')
+client.run('Secret Token :)')
