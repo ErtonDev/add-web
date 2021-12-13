@@ -52,9 +52,9 @@ while True:
     cr1 = get_bot(conn, "e_1", "cr")
 
     # suma o resta
-    if int(cr1[0]) <= min_1 + margin_1:
+    if int(cr1) <= min_1 + margin_1:
         suma = True
-    elif int(cr1[0]) >= max_1 - margin_1:
+    elif int(cr1) >= max_1 - margin_1:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -65,15 +65,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_1", "cr", int(cr1[0]) + diferencia)
+        put_bot(conn, "e_1", "cr", int(cr1) + diferencia)
 
     else:
 
-        if int(cr1[0]) - diferencia <= 5:
+        if int(cr1) - diferencia <= 5:
             put_bot(conn, "e_1", "cr", min_1)
 
         else:
-            put_bot(conn, "e_1", "cr", int(cr1[0]) - diferencia)
+            put_bot(conn, "e_1", "cr", int(cr1) - diferencia)
 
     # empresa 2 ################################################################
 
@@ -84,9 +84,9 @@ while True:
     cr2 = get_bot(conn, "e_2", "cr")
 
     # suma o resta
-    if int(cr2[0]) <= min_2 + margin_2:
+    if int(cr2) <= min_2 + margin_2:
         suma = True
-    elif int(cr2[0]) >= max_2 - margin_2:
+    elif int(cr2) >= max_2 - margin_2:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -96,15 +96,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_2", "cr", int(cr2[0]) + diferencia)
+        put_bot(conn, "e_2", "cr", int(cr2) + diferencia)
 
     else:
 
-        if int(cr1[0]) - diferencia <= 5:
+        if int(cr1) - diferencia <= 5:
             put_bot(conn, "e_2", "cr", min_2)
 
         else:
-            put_bot(conn, "e_2", "cr", int(cr2[0]) - diferencia)
+            put_bot(conn, "e_2", "cr", int(cr2) - diferencia)
 
     # empresa 3 ################################################################
 
@@ -115,9 +115,9 @@ while True:
     cr3 = get_bot(conn, "e_3", "cr")
 
     # suma o resta
-    if int(cr3[0]) <= min_3 + margin_3:
+    if int(cr3) <= min_3 + margin_3:
         suma = True
-    elif int(cr3[0]) >= max_3 - margin_3:
+    elif int(cr3) >= max_3 - margin_3:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -127,15 +127,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_3", "cr", int(cr3[0]) + diferencia)
+        put_bot(conn, "e_3", "cr", int(cr3) + diferencia)
 
     else:
 
-        if int(cr1[0]) - diferencia <= 5:
+        if int(cr1) - diferencia <= 5:
             put_bot(conn, "e_3", "cr", min_3)
 
         else:
-            put_bot(conn, "e_3", "cr", int(cr3[0]) - diferencia)
+            put_bot(conn, "e_3", "cr", int(cr3) - diferencia)
 
     # empresa 4 ################################################################
 
@@ -146,9 +146,9 @@ while True:
     cr4 = get_bot(conn, "e_4", "cr")
 
     # suma o resta
-    if int(cr4[0]) <= min_4 + margin_4:
+    if int(cr4) <= min_4 + margin_4:
         suma = True
-    elif int(cr4[0]) >= max_4 - margin_4:
+    elif int(cr4) >= max_4 - margin_4:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -158,15 +158,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_4", "cr", int(cr4[0]) + diferencia)
+        put_bot(conn, "e_4", "cr", int(cr4) + diferencia)
 
     else:
 
-        if int(cr1[0]) - diferencia <= 5:
+        if int(cr1) - diferencia <= 5:
             put_bot(conn, "e_4", "cr", min_4)
 
         else:
-            put_bot(conn, "e_4", "cr", int(cr4[0]) - diferencia)
+            put_bot(conn, "e_4", "cr", int(cr4) - diferencia)
 
 
     # empresa negra 1 ##########################################################
@@ -178,9 +178,9 @@ while True:
     cr_n_1 = get_bot(conn, "e_n1", "cr")
 
     # suma o resta
-    if int(cr_n_1[0]) <= min_n_1 + margin_n_1:
+    if int(cr_n_1) <= min_n_1 + margin_n_1:
         suma = True
-    elif int(cr_n_1[0]) >= max_n_1 - margin_n_1:
+    elif int(cr_n_1) >= max_n_1 - margin_n_1:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -191,15 +191,15 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_n1", "cr", int(cr_n_1[0]) + diferencia)
+        put_bot(conn, "e_n1", "cr", int(cr_n_1) + diferencia)
 
     else:
 
-        if int(cr_n_1[0]) - diferencia <= 5:
+        if int(cr_n_1) - diferencia <= 5:
             put_bot(conn, "e_n1", "cr", min_n_1)
 
         else:
-            put_bot(conn, "e_n1", "cr", int(cr_n_1[0]) - diferencia)
+            put_bot(conn, "e_n1", "cr", int(cr_n_1) - diferencia)
 
     # empresa negra 2 ##########################################################
 
@@ -210,9 +210,9 @@ while True:
     cr_n_2 = get_bot(conn, "e_n2", "cr")
 
     # suma o resta
-    if int(cr_n_2[0]) <= min_n_2 + margin_n_2:
+    if int(cr_n_2) <= min_n_2 + margin_n_2:
         suma = True
-    elif int(cr_n_1[0]) >= max_n_2 - margin_n_2:
+    elif int(cr_n_1) >= max_n_2 - margin_n_2:
         suma = False
     else:
         if random.randint(1, 2) == 1:
@@ -223,12 +223,12 @@ while True:
 
     # calculo y aplicación
     if suma == True:
-        put_bot(conn, "e_n2", "cr", int(cr_n_2[0]) + diferencia)
+        put_bot(conn, "e_n2", "cr", int(cr_n_2) + diferencia)
 
     else:
 
-        if int(cr_n_2[0]) - diferencia <= 5:
+        if int(cr_n_2) - diferencia <= 5:
             put_bot(conn, "e_n2", "cr", min_n_2)
 
         else:
-            put_bot(conn, "e_n2", "cr", int(cr_n_2[0]) - diferencia)
+            put_bot(conn, "e_n2", "cr", int(cr_n_2) - diferencia)
