@@ -398,7 +398,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                 puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
-                if int(puntos[0]) >= 0 and int(puntos[0]) + 1 <= 15:
+                if int(puntos) >= 0 and int(puntos) + 1 <= 15:
 
                     """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
@@ -406,11 +406,11 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     archivo.write(str(int(puntos[0]) + 1))
                     archivo.close()
                     """
-                    put_user(conn, person, "user_pt", int(puntos[0]) + 1)
+                    put_user(conn, person, "user_pt", int(puntos) + 1)
 
                     # mensaje y log
-                    await ctx.send(embed = embedDato(ctx, "¡Entrega de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) + 1)}**"))
-                    log.logCall(f"mod puntos add {arg1}", ctx.author.name, True, f"De {puntos[0]} a {str(int(puntos[0]) + 1)}")
+                    await ctx.send(embed = embedDato(ctx, "¡Entrega de puntos exitosa!", f"De **{puntos}** a **{str(int(puntos) + 1)}**"))
+                    log.logCall(f"mod puntos add {arg1}", ctx.author.name, True, f"De {puntos} a {str(int(puntos) + 1)}")
 
                 else:
 
@@ -463,20 +463,20 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                 puntos = get_user(conn, person, "user_pt")
 
                 # aplica los cambios
-                if int(puntos[0]) >= 3:
+                if int(puntos) >= 3:
                     """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
                     archivo.write("")
                     archivo.write(str(int(puntos[0]) - 3))
                     archivo.close()
                     """
-                    put_user(conn, person, "user_pt", int(puntos[0]) - 3)
+                    put_user(conn, person, "user_pt", int(puntos) - 3)
 
                     # mensaje y log
-                    await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **{str(int(puntos[0]) - 3)}**"))
-                    log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, f"De {puntos[0]} a {str(int(puntos[0]) - 3)}")
+                    await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos}** a **{str(int(puntos) - 3)}**"))
+                    log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, f"De {puntos} a {str(int(puntos) - 3)}")
 
-                elif int(puntos[0]) < 3 and int(puntos[0]) != 0:
+                elif int(puntos) < 3 and int(puntos) != 0:
                     """
                     archivo = io.open(f"profile/{person}_profile/points.txt", 'w')
                     archivo.write("")
@@ -486,8 +486,8 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     put_user(conn, person, "user_pt", 0)
 
                     # mensaje y log
-                    await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos[0]}** a **0**"))
-                    log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, f"De {puntos[0]} a 0")
+                    await ctx.send(embed = embedDato(ctx, "¡Retirada de puntos exitosa!", f"De **{puntos}** a **0**"))
+                    log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, f"De {puntos} a 0")
 
                 else:
 
@@ -797,7 +797,7 @@ async def perfil(ctx, who = "Me"):
         """
         cantidad_puntos = get_user(conn, person, "user_pt")
 
-        points = cantidad_puntos[0]
+        points = cantidad_puntos
 
         # credits
         """
@@ -807,7 +807,7 @@ async def perfil(ctx, who = "Me"):
         """
         cantidad_credit = get_user(conn, person, "user_cr")
 
-        credit = cantidad_credit[0]
+        credit = cantidad_credit
 
         # nivel
         """
@@ -817,7 +817,7 @@ async def perfil(ctx, who = "Me"):
         """
         cantidad_level = get_user(conn, person, "user_lvl")
 
-        level = cantidad_level[0]
+        level = cantidad_level
 
         # prestige
         """
@@ -827,13 +827,13 @@ async def perfil(ctx, who = "Me"):
         """
         cantidad_prestige = get_user(conn, person, "user_prestige")
 
-        if cantidad_prestige[0] == "x" or cantidad_prestige[0] == "x\n":
+        if cantidad_prestige == "x" or cantidad_prestige == "x\n":
             prestige = ""
-        elif cantidad_prestige[0] == "x*" or cantidad_prestige[0] == "x*\n":
+        elif cantidad_prestige == "x*" or cantidad_prestige == "x*\n":
             prestige = " :dollar:"
-        elif cantidad_prestige[0] == "x**" or cantidad_prestige[0] == "x**\n":
+        elif cantidad_prestige == "x**" or cantidad_prestige == "x**\n":
             prestige = " :euro:"
-        elif cantidad_prestige[0] != "x" and cantidad_prestige[0] != "x*" and cantidad_prestige[0] != "x**" and cantidad_prestige[0] != "x\n" and cantidad_prestige[0] != "x*\n" and cantidad_prestige[0] != "x**\n":
+        elif cantidad_prestige != "x" and cantidad_prestige != "x*" and cantidad_prestige != "x**" and cantidad_prestige != "x\n" and cantidad_prestige != "x*\n" and cantidad_prestige != "x**\n":
             prestige = " :pound:"
         else:
             prestige = ""
@@ -1646,16 +1646,16 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = get_user(conn, ctx.author.id, "cr")
 
                     # calcula las comisiones
-                    comisiones = round( ( int(cr_stock[0]) * int(arg1) ) * 0.1 )
+                    comisiones = round( ( int(cr_stock) * int(arg1) ) * 0.1 )
 
                     # compara los datos
-                    if int(cant_stock[0]) < int(arg1):
+                    if int(cant_stock) < int(arg1):
 
                         await ctx.send(embed = embedDato(ctx, f"No quedan {arg1} acciones de la empresa {func}", f"Revisa las acciones disponibles con **.banco mercado**", "gold"))
                         log.logFail(f"banco compra {func} {arg1}", ctx.author.name, "IndexError")
                         return
 
-                    if (int(cr_stock[0]) * int(arg1)) + comisiones > int(cr_user[0]):
+                    if (int(cr_stock) * int(arg1)) + comisiones > int(cr_user):
 
                         await ctx.send(embed = embedDato(ctx, f"No tienes suficiente saldo para llevar a cabo la operación", f"Espera a que baje el precio de las acciones...", "gold"))
                         log.logFail(f"banco compra {func} {arg1}", ctx.author.name, "IndexError")
@@ -1666,8 +1666,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
-                    gastos = int(cr_stock[0]) * int(arg1) + comisiones
-                    current_cr = str( int(cr_user[0]) - gastos )
+                    gastos = int(cr_stock) * int(arg1) + comisiones
+                    current_cr = str( int(cr_user) - gastos )
                     """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
@@ -1680,7 +1680,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) - int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"e_{func}", "cant", int(cant_stock[0]) - int(arg1))
+                    put_bot(conn, f"e_{func}", "cant", int(cant_stock) - int(arg1))
 
                     # añade esas acciones a las tuyas
                     """
@@ -1735,7 +1735,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     stock_user = get_user(conn, ctx.author.id, f"user_e{func}")
 
-                    if int(stock_user[0]) >= int(arg1):
+                    if int(stock_user) >= int(arg1):
                         pass
                     else:
                         await ctx.send(embed = embedDato(ctx, f"No tienes {arg1} acciones de la empresa {func}", f"Compra con **.banco compra {func} {arg1}**", "gold"))
@@ -1761,8 +1761,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
-                    ingresos = int(cr_stock[0]) * int(arg1)
-                    current_cr = str( int(cr_user[0]) + ingresos )
+                    ingresos = int(cr_stock) * int(arg1)
+                    current_cr = str( int(cr_user) + ingresos )
                     """
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
@@ -1775,7 +1775,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user[0]) - int(arg1))
+                    put_user(conn, ctx.author.id, f"user_e{func}", int(stock_user) - int(arg1))
 
                     # añade esas acciones a las totales
                     """
@@ -1790,7 +1790,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"e_{func}", "cant", int(cant_stock[0]) + int(arg1))
+                    put_bot(conn, f"e_{func}", "cant", int(cant_stock) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
@@ -1848,16 +1848,16 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
                     # calcula las comisiones
-                    comisiones = round( ( int(cr_stock[0]) * int(arg1) ) * 0.1 )
+                    comisiones = round( ( int(cr_stock) * int(arg1) ) * 0.1 )
 
                     # compara los datos
-                    if int(cant_stock[0]) < int(arg1):
+                    if int(cant_stock) < int(arg1):
 
                         await ctx.send(embed = embedDato(ctx, f"No quedan {arg1} acciones de la empresa {func}", f"Revisa las acciones disponibles con **.banco mercado**", "gold"))
                         log.logFail(f"banco compra_negro {func} {arg1}", ctx.author.name, "IndexError")
                         return
 
-                    if (int(cr_stock[0]) * int(arg1)) + comisiones > int(cr_user[0]):
+                    if (int(cr_stock) * int(arg1)) + comisiones > int(cr_user):
 
                         await ctx.send(embed = embedDato(ctx, f"No tienes suficiente saldo para llevar a cabo la operación", f"Espera a que baje el precio de las acciones...", "gold"))
                         log.logFail(f"banco compra_negro {func} {arg1}", ctx.author.name, "IndexError")
@@ -1868,13 +1868,13 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
-                    gastos = int(cr_stock[0]) * int(arg1) + comisiones
-                    current_cr = str( int(cr_user[0]) - gastos )
+                    gastos = int(cr_stock) * int(arg1) + comisiones
+                    current_cr = str( int(cr_user) - gastos )
                     """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
                     """
-                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - gastos)
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user) - gastos)
 
                     # resta las acciones compradas a las totales
                     """
@@ -1882,7 +1882,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) - int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) - int(arg1))
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock) - int(arg1))
 
                     # añade esas acciones a las tuyas
                     """
@@ -1897,7 +1897,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) + int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) + int(arg1))
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Compradas {arg1} acciones de la empresa {func}\nGastos = **{gastos}**"))
@@ -1936,7 +1936,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     stock_user = get_user(conn, ctx.author.id, f"user_n{func}")
 
-                    if int(stock_user[0]) >= int(arg1):
+                    if int(stock_user) >= int(arg1):
                         pass
                     else:
                         await ctx.send(embed = embedDato(ctx, f"No tienes {arg1} acciones de la empresa {func}", f"Compra con **.banco compra {func} {arg1}**", "gold"))
@@ -1962,13 +1962,13 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     """
                     pay_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
-                    ingresos = int(cr_stock[0]) * int(arg1)
-                    current_cr = str( int(cr_user[0]) + ingresos )
+                    ingresos = int(cr_stock) * int(arg1)
+                    current_cr = str( int(cr_user) + ingresos )
                     """
                     pay_cr_user.write(current_cr)
                     pay_cr_user.close()
                     """
-                    put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + ingresos)
+                    put_user(conn, ctx.author.id, "user_cr", int(cr_user) + ingresos)
 
                     # resta las acciones vendidas a las tuyas
                     """
@@ -1976,7 +1976,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_stock_user.write(str( int(stock_user[0]) - int(arg1) ))
                     apply_stock_user.close()
                     """
-                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user[0]) - int(arg1))
+                    put_user(conn, ctx.author.id, f"user_n{func}", int(stock_user) - int(arg1))
 
                     # añade esas acciones a las totales
                     """
@@ -1991,7 +1991,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     apply_cant_stock.write(str( int(cant_stock[0]) + int(arg1) ))
                     apply_cant_stock.close()
                     """
-                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock[0]) + int(arg1))
+                    put_bot(conn, f"e_n{func}", "cant", int(cant_stock) + int(arg1))
 
                     # msg
                     await ctx.send(embed = embedDato(ctx, "Operación satisfecha:", f"Vendidas {arg1} acciones de la empresa {func}\nIngresos = **{ingresos}**"))
@@ -2057,10 +2057,10 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 log.logFail(f"banco {path} {func} {arg1}", ctx.author.name, "ArgumentNotFoundError")
                 return
 
-            if int(cr_user[0]) < int(arg1):
+            if int(cr_user) < int(arg1):
                 permiso = False
 
-                await ctx.send(embed = embedDato(ctx, "No tienes tantos créditos.", f"Tienes **{cr_user[0]}** de **{arg1}** créditos.", "gold"))
+                await ctx.send(embed = embedDato(ctx, "No tienes tantos créditos.", f"Tienes **{cr_user}** de **{arg1}** créditos.", "gold"))
                 log.logFail(f"banco transac {func} {arg1}", ctx.author.name, "IndexError")
                 return
 
@@ -2098,7 +2098,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 apply_cr_user.write(str( int(cr_user[0]) - int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) - int(arg1))
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user) - int(arg1))
 
                 # da el dinero
                 """
@@ -2113,7 +2113,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, ctx.author.id, "user_cr", int(cr_user[0]) + int(arg1))
+                put_user(conn, ctx.author.id, "user_cr", int(cr_user) + int(arg1))
 
                 # cuenta que has hecho la transacción
                 """
@@ -2128,7 +2128,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 apply_transac_user.write(str( int(transac_user[0]) + 1 ))
                 apply_transac_user.close()
                 """
-                put_user(conn, ctx.author.id, "user_transac", int(transac_user[0]) + 1)
+                put_user(conn, ctx.author.id, "user_transac", int(transac_user) + 1)
 
                 # manda el mensaje
                 await ctx.send(embed = embedDato(ctx, "La transacción ha sido llevada a cabo con éxito", f"La cuenta del usuario indicado ha recibido **{arg1}** créditos."))
@@ -2183,7 +2183,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             """
             cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-            if int(cr_user[0]) < 30 and int(emprs1_user[0]) == 0 and int(emprs2_user[0]) == 0 and int(emprs3_user[0]) == 0 and int(emprs4_user[0]) == 0 and int(emprs_n_1_user[0]) == 0 and int(emprs_n_2_user[0]) == 0:
+            if int(cr_user) < 30 and int(emprs1_user) == 0 and int(emprs2_user) == 0 and int(emprs3_user) == 0 and int(emprs4_user) == 0 and int(emprs_n_1_user) == 0 and int(emprs_n_2_user) == 0:
 
                 # pon el dinero
                 """apply_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
@@ -2258,7 +2258,7 @@ async def casino(ctx, path = None, arg1 = None):
                 check_cr_user.close()"""
 
                 cr_user = get_user(conn, ctx.author.id , "user_cr" )
-                if int(cr_user[0]) >= 1:
+                if int(cr_user) >= 1:
 
                     try:
 
@@ -2276,7 +2276,7 @@ async def casino(ctx, path = None, arg1 = None):
                             apply_cr_user.write(str( int(cr_user[0]) + 1 ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + 1 ))
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user) + 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":coin: Cara", "¡Sigue así!"))
                             log.logCall("casino moneda", ctx.author.name, True, "Gana")
@@ -2293,7 +2293,7 @@ async def casino(ctx, path = None, arg1 = None):
                             apply_cr_user.write(str( int(cr_user[0]) - 1 ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) - 1 ))
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user) - 1 ))
 
                             await ctx.send(embed = embedDato(ctx, ":x: Cruz", "Mala suerte..."))
                             log.logCall("casino moneda", ctx.author.name, True, "Pierde")
@@ -2347,7 +2347,7 @@ async def casino(ctx, path = None, arg1 = None):
 
                 cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-                if int(cr_user[0]) >= 1:
+                if int(cr_user) >= 1:
 
                     try:
 
@@ -2362,7 +2362,7 @@ async def casino(ctx, path = None, arg1 = None):
                         apply_cr_user.write(str( int(cr_user[0]) - 1 ))
                         apply_cr_user.close()"""
 
-                        put_user(conn, ctx.author.id, "user_cr" , str( int(cr_user[0]) - 1 ) )
+                        put_user(conn, ctx.author.id, "user_cr" , str( int(cr_user) - 1 ) )
 
                         # lo mete en el bote
                         check_bote = io.open("casino/juego/bote.txt", 'r')
@@ -2409,7 +2409,7 @@ async def casino(ctx, path = None, arg1 = None):
                             apply_cr_user.write(str( int(cr_user[0]) + bote ))
                             apply_cr_user.close()"""
 
-                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user[0]) + bote ) )
+                            put_user(conn, ctx.author.id, "user_cr", str( int(cr_user) + bote ) )
 
                             # reinicia el bote
                             reset_bote = io.open("casino/juego/bote.txt", 'w')
@@ -2473,7 +2473,7 @@ async def casino(ctx, path = None, arg1 = None):
                     check_cr_user.close()"""
                     cr_user = get_user(conn, ctx.author.id, "user_cr")
 
-                    if int(cr_user[0]) > 1:
+                    if int(cr_user) > 1:
 
                         # genera los números y traduce a emoji
                         slot1 = random.randint(1, 7)
@@ -2559,7 +2559,7 @@ async def casino(ctx, path = None, arg1 = None):
                         # aplica los cambios economicos
 
                         #cobro = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
-                        pago = str( int(cr_user[0]) - 1 + premio )
+                        pago = str( int(cr_user) - 1 + premio )
                         #cobro.write(pago)
                         #cobro.close()
 
