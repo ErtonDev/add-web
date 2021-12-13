@@ -6,7 +6,7 @@
 ## MODULES / LIBRARIES
 ################################################################################
 import io
-from web.psqlapi.py import *
+from web.psqlapi import *
 
 ## CLASS
 ################################################################################
@@ -16,14 +16,14 @@ class License_manager():
     def determinate_license(self, ctx):
         actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
-        level = actual_level[0]
+        level = actual_level
         return level
 
     # NOTE: Revisa que se cumplan los requisitos esperados del usuario por su nivel de licencia
     def check_license(self, ctx, lvl_num):
         actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
-        level = actual_level[0]
+        level = actual_level
 
         upgradable = False
 
@@ -47,7 +47,7 @@ class License_manager():
         # calcula el siguiente nivel
         actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
-        level = actual_level[0]
+        level = actual_level
         next_level = int(level) + 1
 
         # aplica la mejora de nivel
@@ -80,7 +80,7 @@ class License_manager():
         # lee el nivel
         actual_level = get_user(conn, ctx.author.id, "user_lvl")
 
-        level = actual_level[0]
+        level = actual_level
 
         # si el nivel es cero no hace nada
         if level == 0:
