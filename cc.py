@@ -1,4 +1,5 @@
 import web.psqlapi
+import sys
 import io
 
 from datetime import datetime
@@ -23,6 +24,7 @@ from pynput import keyboard
 console = Console()
 install(show_locals=True)
 
+# Control Unit Monitor
 
 # display the gui header
 class Header:
@@ -165,26 +167,30 @@ def show_body() -> Panel:
 # TODO(Erton): Swap this functions to get the key on release, on_press should stay empty from now on
 # Maybe if I remove the on_press argument when declaring the listener I can remove this function
 # If it doesnt give an error that means that it isnt necessary, I will try all of this tomorrow
+'''
 def on_press(key):
-	log = io.open("ccdata/runlog.txt", 'a')
-	log.write(str(key))
-	log.close()
-	# listener is running when key
-	try:
-		if key == "w":
-			sel.up_pos()
-		if key == "s":
-			sel.down_pos()
-
-	except AttributeError:
-		pass
+	pass
+'''
 
 def on_release(key):
+	log = io.open("ccdata/runlog.txt", 'a')
+	log.write(str("\n" + rich.inspect(key)))
+	log.close()
 	# when a key is released
-	# this is when I want to get the user input
-	if key == keyboard.Key.esc:
-		# stop listener
-		return False
+	# FIXME(Erton): char isnt in key, this is not the way to do it.
+	# we should inspect key to see what kind of object it is...
+	if key.char == 'w':
+		log = io.open("ccdata/runlog.txt", 'a')
+		log.write(str("\n" + key))
+		log.close()
+
+	elif key.char == 's':
+		log = io.open("ccdata/runlog.txt", 'a')
+		log.write(str("\n" + key))
+		log.close()
+
+	else:
+		pass
 
 
 layout = make_layout()
@@ -195,18 +201,17 @@ print(layout)
 
 sel = Selector()
 
+# key input check
+listener = keyboard.Listener(
+	on_release=on_release
+)
+# TODO(Erton): must program the functions for on_press and on_release
+listener.start()
+# NOTE(Erton): This should work, at least it is giving me the results I was looking for.
+# The code inside on_press() and on_release() should be changed to call the method inside Selector class
+
 # main loop with live functionality
 with Live(layout, refresh_per_second=10, screen=True):
 	while True:
-
-		# key input check
-		listener = keyboard.Listener(
-			on_press=on_press,
-			on_release=on_release
-		)
-		# TODO(Erton): must program the functions for on_press and on_release
-		listener.start()
-		# NOTE(Erton): This should work, at least it is giving me the results I was looking for.
-		# The code inside on_press() and on_release() should be changed to call the method inside Selector class
 
 		sleep(0.1)
