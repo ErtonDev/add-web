@@ -82,7 +82,7 @@ def get_bot(conn, name, param):
 #PUT(User) Function
 def put_user(conn, id, param, values):
     try:
-        cur = conn.cursor();
+        cur = conn.cursor()
         cur.execute(f"""UPDATE users SET {param} = {values} WHERE user_id = {id}""")
         conn.commit()
         cur.close()
@@ -93,8 +93,8 @@ def put_user(conn, id, param, values):
 #name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
 def put_bot(conn, name, param, values):
     try:
-        cur = conn.cursor();
-        cur.execute(f"""UPDATE bot SET {param} = {values} WHERE stock = {name}""")
+        cur = conn.cursor()
+        cur.execute(f"""UPDATE bot SET {param} = {values} WHERE stock = '{name}'""")
         result = cur.fetchall()
         conn.commit()
         cur.close()
