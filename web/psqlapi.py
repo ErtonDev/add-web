@@ -41,7 +41,7 @@ def post_bot(conn, stock, cant, cr):
 #POST(User) Function
 def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac):
     try:
-        cur = conn.cursor();
+        cur = conn.cursor()
         cur.execute(f"""INSERT INTO users(user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac)
         VALUES({user_id}, '{user_name}', {user_cr}, {user_e1}, {user_e2}, {user_e3}, {user_e4}, {user_n1}, {user_n2}, {user_lvl}, {user_pt}, '{user_prestige}', {user_transac})""")
         conn.commit()
@@ -55,7 +55,7 @@ def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user
 #GET(User) Function
 def get_user(conn, id, param):
     try:
-        cur = conn.cursor();
+        cur = conn.cursor()
         cur.execute(f"""SELECT {param} FROM users WHERE user_id = {id}""")
         result = cur.fetchall()
         conn.commit()
@@ -69,7 +69,7 @@ def get_user(conn, id, param):
 #name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
 def get_bot(conn, name, param):
     try:
-        cur = conn.cursor();
+        cur = conn.cursor()
         cur.execute(f"""SELECT {param} FROM bot WHERE stock = {name}""")
         result = cur.fetchall()
         conn.commit()
