@@ -70,7 +70,7 @@ def get_user(conn, id, param):
 def get_bot(conn, name, param):
     try:
         cur = conn.cursor()
-        cur.execute(f"""SELECT {param} FROM bot WHERE stock = {name}""")
+        cur.execute(f"""SELECT {param} FROM bot WHERE stock = '{name}'""")
         result = cur.fetchall()
         conn.commit()
         cur.close()
