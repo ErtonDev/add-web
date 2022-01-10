@@ -34,7 +34,7 @@ def post_bot(conn, stock, cant, cr):
         cur.close()
     except Exception as error:
         conn.rollback()
-        print(f"ERROR: Failed to insert data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to insert BOT data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
     else:
         conn.commit()
 
@@ -48,7 +48,7 @@ def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user
         cur.close()
     except Exception as error:
         conn.rollback()
-        print(f"ERROR: Failed to insert data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to insert USER data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
     else:
         conn.commit()
 
@@ -63,7 +63,7 @@ def get_user(conn, id, param):
         #Result is a list of tuples, so to get the string we have to access both with index 0
         return result[0][0]
     except Exception as error:
-        print(f"ERROR: Failed to get data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to get USER data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #GET(Bot) Function
 #name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
@@ -77,7 +77,7 @@ def get_bot(conn, name, param):
         #Result is a list of tuples, so to get the string we have to access both with index 0
         return result[0][0]
     except Exception as error:
-        print(f"ERROR: Failed to get data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to get BOT data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #PUT(User) Function
 def put_user(conn, id, param, values):
@@ -87,7 +87,7 @@ def put_user(conn, id, param, values):
         conn.commit()
         cur.close()
     except Exception as error:
-        print(f"ERROR: Failed to put data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to put USER data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #PUT(Bot) Function
 #name can be: "e_1", "e_2", "e_3", "e_4", "e_n1", "e_n2"
@@ -95,10 +95,7 @@ def put_bot(conn, name, param, values):
     try:
         cur = conn.cursor()
         cur.execute(f"""UPDATE bot SET {param} = {values} WHERE stock = '{name}'""")
-        result = cur.fetchall()
         conn.commit()
         cur.close()
-        #Result is a list of tuples, so to get the string we have to access both with index 0
-        return result[0][0]
     except Exception as error:
-        print(f"ERROR: Failed to get data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+        print(f"ERROR: Failed to put BOT data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
