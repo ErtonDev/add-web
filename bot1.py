@@ -1643,7 +1643,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     cr_user = check_cr_user.readlines()
                     check_cr_user.close()
                     """
-                    cr_user = get_user(conn, ctx.author.id, "cr")
+                    cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                     # calcula las comisiones
                     comisiones = round( ( int(cr_stock) * int(arg1) ) * 0.1 )
