@@ -1667,12 +1667,12 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
                     gastos = int(cr_stock) * int(arg1) + comisiones
-                    current_cr = str( int(cr_user) - gastos )
+                    current_cr = int(cr_user) - gastos 
                     """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
                     """
-                    put_user(conn, f"user_e{func}", "user_cr", int(current_cr))
+                    put_user(conn, ctx.author.id, "user_cr", current_cr)
 
                     # resta las acciones compradas a las totales
                     """
