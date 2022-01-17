@@ -1672,7 +1672,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
                     """
-                    put_user(conn, f"e_{func}", "user_cr", int(current_cr))
+                    put_user(conn, f"user_e{func}", "user_cr", int(current_cr))
 
                     # resta las acciones compradas a las totales
                     """
