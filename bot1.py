@@ -300,7 +300,7 @@ async def admin(ctx, path = "None", func = "None", arg1 = "None", arg2 = "None")
                 await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"La ficha de {person} está limpia."))
                 log.logCall(f"admin clean {func}", ctx.author.name)
 
-            except FileNotFoundError:
+            except:
 
                 await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"Me temo que el usuario {person} no está en nuestra base de datos.", "gold"))
                 log.logFail(f"admin clean {func}", ctx.author.name, "AccountNotFoundError")
@@ -418,7 +418,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     log.logCall(f"mod puntos add {arg1}", ctx.author.name, True, "15 MAX")
 
             # no tiene cuenta
-            except FileNotFoundError:
+            except:
 
                 await ctx.send(embed = embedDato(ctx, "¡Este usuario no tiene cuenta!", "*Dile que ya tarda en usar .registro*", "gold"))
                 log.logFail(f"mod puntos add {arg1}", ctx.author.name, "AccountNotFoundError")
@@ -495,7 +495,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                     log.logCall(f"mod puntos remove {arg1}", ctx.author.name, True, "0 MIN")
 
             # no tiene cuenta
-            except FileNotFoundError:
+            except:
 
                 await ctx.send(embed = embedDato(ctx, "¡Este usuario no tiene cuenta!", "*Dile que ya tarda en usar .registro*", "gold"))
                 log.logFail(f"mod puntos remove {arg1}", ctx.author.name, "AccountNotFoundError")
@@ -598,7 +598,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
                 await user.send(message)
                 log.logEvent("MULTA notificada al usuario")
 
-            except FileNotFoundError:
+            except:
 
                 # si el infractor no tiene cuenta...
                 await ctx.send(embed = embedDato(ctx, "El infractor no está registrado en la base de datos.", f"En otras palabras: no tiene una cuenta.\nSe ha notificado a {user} y al administrador sobre esto.\n\n**La multa se aplicará pero no se mostrará en la ficha del infractor.**"))
@@ -681,7 +681,7 @@ async def rol(ctx, role = "none"):
         """
         get(conn, ctx.author.id, "user_id") #el user_id es solo para coger algo y probar si va
 
-    except FileNotFoundError:
+    except:
         with_account = False
 
     if with_account == True:
@@ -843,7 +843,7 @@ async def perfil(ctx, who = "Me"):
         else:
             reminder = "Esta es la cuenta de usuario de otra persona en *EL HIJO*.\nPara acceder a la tuya no menciones a nadie."
 
-    except FileNotFoundError:
+    except:
         points = "No hay datos"
         credit = "No hay datos"
         level = "No hay datos"
@@ -909,7 +909,7 @@ async def perfil(ctx, who = "Me"):
 
         embed.add_field(
             name = "Nivel",
-            value = level + prestige
+            value = str(level) + prestige
         )
 
         embed.set_footer(
@@ -1025,7 +1025,7 @@ async def ficha(ctx, who = "Me"):
             await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {who}:", multas_now))
             log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta ajena: " + who)
 
-    except FileNotFoundError:
+    except:
 
         if person == ctx.author.id:
             await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {ctx.author.name}:", "*No hay datos, el usuario no tiene una cuenta.*"))
@@ -1171,7 +1171,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
             await ctx.send(embed = embed)
             log.logCall(f"banco mercado", ctx.author.name, True, f"{actual_cr_emprs1} | {actual_cr_emprs2} | {actual_cr_emprs3} | {actual_cr_emprs4}")
 
-        except FileNotFoundError:
+        except:
             await ctx.send(embed = embedDato(ctx, "No tienes una cuenta.", "Crea tu cuenta con **.registro** para acceder a estas funciones.", "gold"))
             log.logFail("banco mercado", ctx.author.name, "AccountNotFoundError")
 
@@ -1294,7 +1294,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 transac_user = check_transac_user.readlines()
                 check_transac_user.close()
                 """
-                transac_user = get_user(conn, ctx.author.name, "user_transac")
+                transac_user = get_user(conn, ctx.author.id, "user_transac")
 
                 if int(transac_user) >= 10:
                     completion2 = ":white_check_mark: -> *Completado*"
@@ -1313,7 +1313,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, ctx.author.name, "user_cr")
+                #NOTE: Changed actx.author.name to ctx.author.id
+                cr_user = get_user(conn, ctx.author.id, "user_cr")
 
                 if int(cr_user) >= 2500:
                     completion1 = ":white_check_mark: -> *Completado*"
@@ -2419,7 +2420,7 @@ async def casino(ctx, path = None, arg1 = None):
                             await ctx.send(embed = embedDato(ctx, "¡Ese crédito ha ganado el bote!", f":coin: ¡Enhorabuena! :coin:\n\n**TU PREMIO ES DE:**```{bote} créditos```\n\n*El valor del bote ha vuelto a 0.*"))
                             log.logCall("casino bote", ctx.author.name, True, "BOTE")
 
-                    except FileNotFoundError:
+                    except:
 
                         imageselector = random.randint(1,3)
                         file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
