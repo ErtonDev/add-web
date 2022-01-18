@@ -55,7 +55,7 @@ for keys in profiles:#list of the profiles names
     prokey=[]
     for key in profiles:
         prokey.append(key)
-    api.post_user(conn, "users",
+    api.post_user(conn,
     prokey[index][:-8], 'name',
     str(profiles.get(prokey[index])[0])[2:-2],
     str(profiles.get(prokey[index])[1])[2:-2],
