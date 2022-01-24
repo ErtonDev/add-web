@@ -1667,7 +1667,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
                     gastos = int(cr_stock) * int(arg1) + comisiones
-                    current_cr = int(cr_user) - gastos 
+                    current_cr = int(cr_user) - gastos
                     """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
@@ -2106,14 +2106,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, ctx.author.id, "user_cr")
+                cr_user = get_user(conn, person, "user_cr")
 
                 """
                 apply_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, ctx.author.id, "user_cr", int(cr_user) + int(arg1))
+                put_user(conn, person, "user_cr", int(cr_user) + int(arg1))
 
                 # cuenta que has hecho la transacción
                 """
