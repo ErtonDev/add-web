@@ -679,7 +679,8 @@ async def rol(ctx, role = "none"):
         profile_existence = io.open(f"{ctx.author.id}_profile.txt", 'r')
         profile_existence.close()
         """
-        get(conn, ctx.author.id, "user_id") #el user_id es solo para coger algo y probar si va
+        profile_existence = get_user(conn, ctx.author.id, "user_pt") #el user_id es solo para coger algo y probar si va
+        profile_exists = profile_existence + 1
 
     except:
         with_account = False
@@ -892,7 +893,7 @@ async def perfil(ctx, who = "Me"):
     else:
         # embed
         embed = discord.Embed(
-            title = who,
+            title = get_user(conn, person, "user_name"),
             description = reminder,
             color = discord.Color.blue()
         )
