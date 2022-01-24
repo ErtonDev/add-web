@@ -58,8 +58,8 @@ def get_user(conn, id, param):
         cur = conn.cursor()
         cur.execute(f"""SELECT {param} FROM users WHERE user_id = {id}""")
         result = cur.fetchall()
-        conn.commit()
         cur.close()
+        conn.commit()
         #Result is a list of tuples, so to get the string we have to access both with index 0
         return result[0][0]
     except Exception as error:

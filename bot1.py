@@ -931,6 +931,7 @@ async def registro(ctx):
         """
 
         confirmation = get_user(conn, ctx.author.id, "user_pt")
+        confirm = confirmation + 1
 
         await ctx.send(embed = embedDato(ctx, "¡Pero si ya te has registrado!", "Revisa la información de tu cuenta con .perfil", "gold"))
         log.logFail("registro", ctx.author.name, "AccountExists")
