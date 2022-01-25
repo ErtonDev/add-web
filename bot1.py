@@ -85,6 +85,23 @@ async def change_status():
 
 
 
+## profile identification
+################################################################################
+def identification(arg1):
+    if arg1[:3] == "<@!":
+        return arg1[3:-1]
+
+    elif arg1[:2] == "<@" and arg1[:3] != "<@!" and arg1[:3] != "<@&":
+        return arg1[2:1]
+
+    else:
+        imageselector = random.randint(1,3)
+        file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
+
+        await ctx.send(file = file, embed = embedError(ctx))
+        log.logFail(f"mod {path} {func} {arg1}", ctx.author.name, "ArgumentNotFoundError")
+
+
 ## main EMBEDS
 ################################################################################
 # mantenimiento
@@ -679,7 +696,8 @@ async def rol(ctx, role = "none"):
         profile_existence = io.open(f"{ctx.author.id}_profile.txt", 'r')
         profile_existence.close()
         """
-        get(conn, ctx.author.id, "user_id") #el user_id es solo para coger algo y probar si va
+        profile_existence = get_user(conn, ctx.author.id, "user_pt") #el user_id es solo para coger algo y probar si va
+        profile_exists = profile_existence + 1
 
     except:
         with_account = False
@@ -892,7 +910,7 @@ async def perfil(ctx, who = "Me"):
     else:
         # embed
         embed = discord.Embed(
-            title = who,
+            title = get_user(conn, person, "user_name"),
             description = reminder,
             color = discord.Color.blue()
         )
@@ -1669,7 +1687,7 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                     rest_cr_user = io.open(f"profile/{ctx.author.id}_profile/credit.txt", 'w')
                     """
                     gastos = int(cr_stock) * int(arg1) + comisiones
-                    current_cr = int(cr_user) - gastos 
+                    current_cr = int(cr_user) - gastos
                     """
                     rest_cr_user.write(current_cr)
                     rest_cr_user.close()
@@ -2108,14 +2126,14 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 cr_user = check_cr_user.readlines()
                 check_cr_user.close()
                 """
-                cr_user = get_user(conn, ctx.author.id, "user_cr")
+                cr_user = get_user(conn, person, "user_cr")
 
                 """
                 apply_cr_user = io.open(f"profile/{person}_profile/credit.txt", 'w')
                 apply_cr_user.write(str( int(cr_user[0]) + int(arg1) ))
                 apply_cr_user.close()
                 """
-                put_user(conn, ctx.author.id, "user_cr", int(cr_user) + int(arg1))
+                put_user(conn, person, "user_cr", int(cr_user) + int(arg1))
 
                 # cuenta que has hecho la transacción
                 """
