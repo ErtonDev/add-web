@@ -85,6 +85,23 @@ async def change_status():
 
 
 
+## profile identification
+################################################################################
+def identification(arg1):
+    if arg1[:3] == "<@!":
+        return arg1[3:-1]
+
+    elif arg1[:2] == "<@" and arg1[:3] != "<@!" and arg1[:3] != "<@&":
+        return arg1[2:1]
+
+    else:
+        imageselector = random.randint(1,3)
+        file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
+
+        await ctx.send(file = file, embed = embedError(ctx))
+        log.logFail(f"mod {path} {func} {arg1}", ctx.author.name, "ArgumentNotFoundError")
+
+
 ## main EMBEDS
 ################################################################################
 # mantenimiento
