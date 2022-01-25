@@ -294,33 +294,26 @@ async def admin(ctx, path = "None", func = "None", arg1 = "None", arg2 = "None")
         ## RESPECTO A ADMINISTRACIÓN
         # .admin limpia
         elif path == "clean":
-            who = func
-            # identifica la persona
-            if who[:3] == "<@!" and who[3:-1] != str(ctx.author.id):
-                # tal vez no eres tu, pero es una persona
-                person = who[3:-1]
 
-            elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&" and who[2:-1] != str(ctx.author.id):
-                # más de lo mismo, pero para aquellos que mandan el argumento diferente
-                person = who[2:-1]
+            person = identification(func)
 
-            else:
+            if person == None:
                 # who no es una persona, por lo tanto mostraremos tu cuenta
                 person = ctx.author.id
+            else:
+                try:
 
-            try:
+                    abre_ficha = io.open(f"profile/{person}_profile/multas.txt", 'w')
+                    abre_ficha.write("")
+                    abre_ficha.close()
 
-                abre_ficha = io.open(f"profile/{person}_profile/multas.txt", 'w')
-                abre_ficha.write("")
-                abre_ficha.close()
+                    await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"La ficha de {person} está limpia."))
+                    log.logCall(f"admin clean {func}", ctx.author.name)
 
-                await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"La ficha de {person} está limpia."))
-                log.logCall(f"admin clean {func}", ctx.author.name)
+                except:
 
-            except:
-
-                await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"Me temo que el usuario {person} no está en nuestra base de datos.", "gold"))
-                log.logFail(f"admin clean {func}", ctx.author.name, "AccountNotFoundError")
+                    await ctx.send(embed = embedDato(ctx, "Oh poderoso Führer... <:saludo:802315699255115826><:elfuhrer:798991064665030672>", f"Me temo que el usuario {person} no está en nuestra base de datos.", "gold"))
+                    log.logFail(f"admin clean {func}", ctx.author.name, "AccountNotFoundError")
 
         # if command isn't found
         else:
@@ -378,21 +371,9 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
     # dar puntos # NOTE: de uno en uno
     elif path == "puntos" and func == "add":
 
-        pase = False
-        who = arg1
+        person = identification(arg1)
 
-        # identifica la persona
-        if who[:3] == "<@!":
-            # tal vez no eres tu, pero es una persona
-            person = who[3:-1]
-            pase = True
-
-        elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&":
-            # más de lo mismo, pero para aquellos que mandan el argumento diferente
-            person = who[2:-1]
-            pase = True
-
-        else:
+        if person == None:
             # who no es una persona, por lo tanto mostraremos un error
             imageselector = random.randint(1,3)
             file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
@@ -402,7 +383,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
 
 
         # la funcionalidad
-        if pase == True:
+        else:
 
             # mira si tiene cuenta
             try:
@@ -443,21 +424,9 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
     # quitar puntos # NOTE: de tres en tres
     elif path == "puntos" and func == "remove":
 
-        pase = False
-        who = arg1
+        person = identification(arg1)
 
-        # identifica la persona
-        if who[:3] == "<@!":
-            # tal vez no eres tu, pero es una persona
-            person = who[3:-1]
-            pase = True
-
-        elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&":
-            # más de lo mismo, pero para aquellos que mandan el argumento diferente
-            person = who[2:-1]
-            pase = True
-
-        else:
+        if person == None:
             # who no es una persona, por lo tanto mostraremos un error
             imageselector = random.randint(1,3)
             file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
@@ -467,7 +436,7 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
 
 
         # la funcionalidad
-        if pase == True:
+        else:
 
             # mira si tiene cuenta
             try:
@@ -561,21 +530,9 @@ async def mod(ctx, path = "None", func = "None", arg1 = "None", user : discord.U
     # multa
     elif path == "multa":
 
-        pase = False
-        who = func
+        person = identification(func)
 
-        # identifica la persona
-        if who[:3] == "<@!":
-            # tal vez no eres tu, pero es una persona
-            person = who[3:-1]
-            pase = True
-
-        elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&":
-            # más de lo mismo, pero para aquellos que mandan el argumento diferente
-            person = who[2:-1]
-            pase = True
-
-        else:
+        if person == None:
             # who no es una persona, por lo tanto mostraremos un error
             imageselector = random.randint(1,3)
             file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
@@ -792,85 +749,80 @@ async def contador(ctx):
 @client.command()
 async def perfil(ctx, who = "Me"):
     # identifica la persona
-    if who[:3] == "<@!" and who[3:-1] != str(ctx.author.id):
-        # tal vez no eres tu, pero es una persona
-        person = who[3:-1]
+    person = identification(who)
 
-    elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&" and who[2:-1] != str(ctx.author.id):
-        # más de lo mismo, pero para aquellos que mandan el argumento diferente
-        person = who[2:-1]
-
-    else:
+    if person == None:
         # who no es una persona, por lo tanto mostraremos tu cuenta
         person = ctx.author.id
 
     # encuentra el perfil y obtiene la información de este
-    try:
+    else:
+        try:
 
-        # puntos
-        """
-        encuentra_puntos = io.open(f"profile/{person}_profile/points.txt", 'r')
-        cantidad_puntos = encuentra_puntos.readlines()
-        encuentra_puntos.close()
-        """
-        cantidad_puntos = get_user(conn, person, "user_pt")
+            # puntos
+            """
+            encuentra_puntos = io.open(f"profile/{person}_profile/points.txt", 'r')
+            cantidad_puntos = encuentra_puntos.readlines()
+            encuentra_puntos.close()
+            """
+            cantidad_puntos = get_user(conn, person, "user_pt")
 
-        points = cantidad_puntos
+            points = cantidad_puntos
 
-        # credits
-        """
-        encuentra_credit = io.open(f"profile/{person}_profile/credit.txt", 'r')
-        cantidad_credit = encuentra_credit.readlines()
-        encuentra_credit.close()
-        """
-        cantidad_credit = get_user(conn, person, "user_cr")
+            # credits
+            """
+            encuentra_credit = io.open(f"profile/{person}_profile/credit.txt", 'r')
+            cantidad_credit = encuentra_credit.readlines()
+            encuentra_credit.close()
+            """
+            cantidad_credit = get_user(conn, person, "user_cr")
 
-        credit = cantidad_credit
+            credit = cantidad_credit
 
-        # nivel
-        """
-        encuentra_level = io.open(f"profile/{person}_profile/level.txt", 'r')
-        cantidad_level = encuentra_level.readlines()
-        encuentra_level.close()
-        """
-        cantidad_level = get_user(conn, person, "user_lvl")
+            # nivel
+            """
+            encuentra_level = io.open(f"profile/{person}_profile/level.txt", 'r')
+            cantidad_level = encuentra_level.readlines()
+            encuentra_level.close()
+            """
+            cantidad_level = get_user(conn, person, "user_lvl")
 
-        level = cantidad_level
+            level = cantidad_level
 
-        # prestige
-        """
-        encuentra_prestige = io.open(f"profile/{person}_profile/prestige.txt", 'r')
-        cantidad_prestige = encuentra_prestige.readlines()
-        encuentra_prestige.close()
-        """
-        cantidad_prestige = get_user(conn, person, "user_prestige")
+            # prestige
+            """
+            encuentra_prestige = io.open(f"profile/{person}_profile/prestige.txt", 'r')
+            cantidad_prestige = encuentra_prestige.readlines()
+            encuentra_prestige.close()
+            """
+            cantidad_prestige = get_user(conn, person, "user_prestige")
 
-        if cantidad_prestige == "x" or cantidad_prestige == "x\n":
+            if cantidad_prestige == "x" or cantidad_prestige == "x\n":
+                prestige = ""
+            elif cantidad_prestige == "x*" or cantidad_prestige == "x*\n":
+                prestige = " :dollar:"
+            elif cantidad_prestige == "x**" or cantidad_prestige == "x**\n":
+                prestige = " :euro:"
+            elif cantidad_prestige != "x" and cantidad_prestige != "x*" and cantidad_prestige != "x**" and cantidad_prestige != "x\n" and cantidad_prestige != "x*\n" and cantidad_prestige != "x**\n":
+                prestige = " :pound:"
+            else:
+                prestige = ""
+
+            if person == ctx.author.id:
+                reminder = f"La cuenta de usuario de **@{ctx.author.name}** en *EL HIJO*.\n¡Accede a tu información hoy mismo!"
+            else:
+                reminder = "Esta es la cuenta de usuario de otra persona en *EL HIJO*.\nPara acceder a la tuya no menciones a nadie."
+
+        except:
+            points = "No hay datos"
+            credit = "No hay datos"
+            level = "No hay datos"
             prestige = ""
-        elif cantidad_prestige == "x*" or cantidad_prestige == "x*\n":
-            prestige = " :dollar:"
-        elif cantidad_prestige == "x**" or cantidad_prestige == "x**\n":
-            prestige = " :euro:"
-        elif cantidad_prestige != "x" and cantidad_prestige != "x*" and cantidad_prestige != "x**" and cantidad_prestige != "x\n" and cantidad_prestige != "x*\n" and cantidad_prestige != "x**\n":
-            prestige = " :pound:"
-        else:
-            prestige = ""
 
-        if person == ctx.author.id:
-            reminder = f"La cuenta de usuario de **@{ctx.author.name}** en *EL HIJO*.\n¡Accede a tu información hoy mismo!"
-        else:
-            reminder = "Esta es la cuenta de usuario de otra persona en *EL HIJO*.\nPara acceder a la tuya no menciones a nadie."
-
-    except:
-        points = "No hay datos"
-        credit = "No hay datos"
-        level = "No hay datos"
-        prestige = ""
-
-        if person == ctx.author.id:
-            reminder = "Aún no tienes una cuenta de *EL HIJO*\nUsa .registro para crear una ahora mismo."
-        else:
-            reminder = "Esta persona aún no tiene una cuenta de *EL HIJO*\nUsa .registro para crear una ahora mismo."
+            if person == ctx.author.id:
+                reminder = "Aún no tienes una cuenta de *EL HIJO*\nUsa .registro para crear una ahora mismo."
+            else:
+                reminder = "Esta persona aún no tiene una cuenta de *EL HIJO*\nUsa .registro para crear una ahora mismo."
 
     if person == ctx.author.id:
         # embed
@@ -1017,43 +969,34 @@ async def registro(ctx):
 @client.command()
 async def ficha(ctx, who = "Me"):
 
-    # identifica la persona
-    if who[:3] == "<@!" and who[3:-1] != str(ctx.author.id):
-        # tal vez no eres tu, pero es una persona
-        person = who[3:-1]
+    person = identification(who)
 
-    elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&" and who[2:-1] != str(ctx.author.id):
-        # más de lo mismo, pero para aquellos que mandan el argumento diferente
-        person = who[2:-1]
-
-    else:
+    if person == None:
         # who no es una persona, por lo tanto mostraremos tu cuenta
         person = ctx.author.id
 
-    try:
+    else:
+        try:
+            abre_ficha = io.open(f"profile/{person}_profile/multas.txt", 'r')
+            multas_now = abre_ficha.read()
+            abre_ficha.close()
 
-        abre_ficha = io.open(f"profile/{person}_profile/multas.txt", 'r')
-        multas_now = abre_ficha.read()
-        abre_ficha.close()
+            if person == ctx.author.id:
+                await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {ctx.author.name}:", multas_now))
+                log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta propia: " + who)
 
-        if person == ctx.author.id:
-            await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {ctx.author.name}:", multas_now))
-            log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta propia: " + who)
+            else:
+                await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {who}:", multas_now))
+                log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta ajena: " + who)
 
-        else:
-            await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {who}:", multas_now))
-            log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta ajena: " + who)
+        except:
+            if person == ctx.author.id:
+                await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {ctx.author.name}:", "*No hay datos, el usuario no tiene una cuenta.*"))
+                log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta propia: " + who)
 
-    except:
-
-        if person == ctx.author.id:
-            await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {ctx.author.name}:", "*No hay datos, el usuario no tiene una cuenta.*"))
-            log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta propia: " + who)
-
-        else:
-            await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {who}:", "*No hay datos, el usuario no tiene una cuenta.*"))
-            log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta ajena: " + who)
-
+            else:
+                await ctx.send(embed = embedDato(ctx, f"Multas pendientes de {who}:", "*No hay datos, el usuario no tiene una cuenta.*"))
+                log.logCall(f"ficha {who}", ctx.author.name, True, "Se muestra cuenta ajena: " + who)
 
 
 ## FUNCIONES GRANDES
@@ -2036,18 +1979,10 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
     elif path == "transac":
 
         try:
-            who = func
-
             # identifica la persona
-            if who[:3] == "<@!" and who[3:-1] != str(ctx.author.id):
-                # es una persona
-                person = who[3:-1]
+            person = identification(func)
 
-            elif who[:2] == "<@" and who[:3] != "<@!" and who[:3] != "<@&" and who[2:-1] != str(ctx.author.id):
-                # es una persona con otro formato
-                person = who[2:-1]
-
-            else:
+            if person == None:
                 # who no es una persona o eres tu, por lo tanto lo diremos
                 imageselector = random.randint(1,3)
                 file = discord.File(f"resources/elhijo_commandnotfound{str(imageselector)}.png", filename = "foto.png")
@@ -2055,6 +1990,8 @@ async def banco(ctx, path = None, func = "None", arg1 = None):
                 await ctx.send(file = file, embed = embedError(ctx))
                 log.logFail(f"banco {path} {func} {arg1}", ctx.author.name, "ArgumentNotFoundError")
                 return
+            else:
+                pass
 
             # CONTROLES DE SEGURIDAD PARA MIRAR QUE TODOS LOS ARGUMENTOS SON POSIBLES
             permiso = False
