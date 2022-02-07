@@ -58,8 +58,8 @@ def get_user(conn, id, param):
         cur = conn.cursor()
         cur.execute(f"""SELECT {param} FROM users WHERE user_id = {id}""")
         result = cur.fetchall()
-        conn.commit()
         cur.close()
+        conn.commit()
         #Result is a list of tuples, so to get the string we have to access both with index 0
         return result[0][0]
     except Exception as error:
@@ -78,6 +78,20 @@ def get_bot(conn, name, param):
         return result[0][0]
     except Exception as error:
         print(f"ERROR: Failed to get BOT data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+
+#GET(Contador) Function
+#name can only be "count"
+def get_contador(conn, name, param):
+    try:
+        cur = conn.cursor()
+        cur.execute(f"""SELECT {param} FROM contador WHERE word = '{name}'""")
+        result = cur.fetchall()
+        conn.commit()
+        cur.close()
+        #Result is a list of tuples, so to get the string we have to access both with index 0
+        return result[0][0]
+    except Exception as error:
+        print(f"ERROR: Failed to get CONTADOR data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
 
 #PUT(User) Function
 def put_user(conn, id, param, values):
@@ -99,3 +113,14 @@ def put_bot(conn, name, param, values):
         cur.close()
     except Exception as error:
         print(f"ERROR: Failed to put BOT data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
+
+
+
+def put_contador(conn, name, param, values):
+    try:
+        cur = conn.cursor()
+        cur.execute(f"""UPDATE contador SET {param} = {values} WHERE word = '{name}'""")
+        conn.commit()
+        cur.close()
+    except Exception as error:
+        print(f"ERROR: Failed to put CONTADOR data!\nERROR INFO: {error}\nEXCEPTION TYPE: {type(error)}\n-------------------")
