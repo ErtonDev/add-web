@@ -206,15 +206,21 @@ async def on_message(ctx):
         wordsFound = re.findall(keywords1[i], ctx.content.lower())
 
         if len(wordsFound) != 0:
+            '''
             countthat = io.open('counter_chupapitos.txt', 'r')
             actualammount = countthat.readlines()
             countthat.close()
+            '''
+            actualammount = get_contador(conn, "chupapitos", "count")
 
+            '''
             writethat = io.open('counter_chupapitos.txt', 'w')
             thenewammount = int(actualammount[0]) + len(wordsFound)
             writethat.write(str(thenewammount))
             writethat.close()
+            '''
 
+            put_contador(conn, "chupapitos", "count", int(actualammount[0]) + len(wordsFound))
             itwas1 = True
             sendMsg = True
 
@@ -223,14 +229,20 @@ async def on_message(ctx):
         wordsFound = re.findall(keywords2[i], ctx.content.lower())
 
         if len(wordsFound) != 0:
+            '''
             countthat = io.open('counter_maricon.txt', 'r')
             actualammount = countthat.readlines()
             countthat.close()
+            '''
+            actualammount = get_contador(conn, "maricon", "count")
 
+            '''
             writethat = io.open('counter_maricon.txt', 'w')
             thenewammount = int(actualammount[0]) + len(wordsFound)
             writethat.write(str(thenewammount))
             writethat.close()
+            '''
+            put_contador(conn, "maricon", "count", int(actualammount[0]) + len(wordsFound))
 
             itwas2 = True
             sendMsg = True
@@ -750,6 +762,7 @@ async def rol(ctx, role = "none"):
 @client.command()
 async def contador(ctx):
     # counters
+    '''
     read_chupapitos = io.open('counter_chupapitos.txt', 'r')
     ammount_chupapitos = read_chupapitos.readlines()
     read_chupapitos.close()
@@ -757,7 +770,9 @@ async def contador(ctx):
     read_maricon = io.open('counter_maricon.txt', 'r')
     ammount_maricon = read_maricon.readlines()
     read_maricon.close()
-
+    '''
+    ammount_chupapitos = get_contador(conn, "chupapitos", "count")
+    ammount_maricon = get_contador(conn, "maricon", "count")
     # embed
     embed = discord.Embed(
     title = "Palabras muy usadas en el server:",

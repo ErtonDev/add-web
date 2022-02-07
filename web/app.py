@@ -2,7 +2,7 @@
 from flask import Flask, render_template
 
 # API
-from psqlapi import connect, post, get, put
+from psqlapi import connect, post_bot, post_user, get_bot, get_user, put_bot, put_user
 
 app = Flask(__name__)
 
