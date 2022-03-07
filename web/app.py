@@ -16,7 +16,7 @@ def index():
 # bot
 @app.route("/bot")
 def bot():
-    return reder_template("bot.html", name="El Hijo")
+    return render_template("bot.html", name="El Hijo")
 
 # profile
 @app.route("/profile")
@@ -25,7 +25,7 @@ def profile():
 
 # library
 @app.route("/library")
-def profile():
+def library():
     return render_template("library.html", name="ADDeditorial")
 
 
