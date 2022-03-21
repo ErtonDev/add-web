@@ -13,29 +13,31 @@ header {
   grid-template-columns: repeat(3, 1fr);
   position: fixed;
   width: 100%;
-  background-color:#E2DED0;
+  background-color:#ffffff;
   z-index: 2;
 }
 .header-elements{
   padding: 1em;
   font-size: 1.25vw;
-  text-align: center;
   align-items: center;
-}
-.header-elements:hover{
-  border: 1px solid black;
 }
 #AuDeDi-Header{
   text-decoration: none;
   color: black;
 }
-div#logo{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
+
+#logo{
+display:grid;
+grid-template-columns: 0.2225fr 1fr 1fr
+
+}
+#path{
+  font-family:  'Roboto', sans-serif;
 }
 div#perfil{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  text-align:center;
 }
 .perfil-elements{
   font-family: 'Roboto', sans-serif;
@@ -47,38 +49,49 @@ div#front{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 100%;
-  height: 800px;
+  height: 600px;
   background: url(fondo-img.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-div#front div{
-  padding: 1em;
-}
 div#front-right{
-  border-left: 3px solid black;
-  background: rgba(5, 7, 12, 0.75);
+  background: rgba(5, 7, 12, 1);
 }
 div#front-left{
-  border-right: 3px solid black;
-  background: rgba(5, 7, 12, 0.75);
+  background: rgba(255, 7, 12, 1);
 }
 
 h1#AuDeDi-Front{
   position: absolute;
-  top:50%;
-  left: 1%;
-  transform: translateY(-50%);
-  font-size: 7vw;
-  color: #E2DED0;
+  top:25%;
+  left: 15%;
+  font-size: 4vw;
+  color: #ffffff;
+}
+#desc1-front{
+  position: absolute;
+  top:45%;
+  left:15%;
+  font-size:1.5vw;
+  color:#ffffff;
+  font-family: 'Roboto', sans-serif;
+
+}
+#desc2-front{
+  position: absolute;
+  top:60%;
+  left:15%;
+  font-size:1vw;
+  color:#ffffff;
+  font-family: 'Roboto', sans-serif;
 }
 h1#LwOds-Front{
   position: absolute;
   top:50%;
   transform: translateY(-50%);
   font-size: 4vw;
-  color: #E2DED0;
+  color: #ffffff;
 }
 /*FRONT*//*FRONT*//*FRONT*/
 
@@ -88,7 +101,7 @@ h1#LwOds-Front{
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 400px;
   padding: 3em;
-  background-color: #E2DED0;
+  background-color: #ffffff;
 }
 .bloque{
   grid-template-rows: 80% 20%;
@@ -96,7 +109,7 @@ h1#LwOds-Front{
   background-color: white;
   display: block;
   border: 0px;
-  box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 20px 30px 2px rgba(0, 0, 0, 0.2);
 }
 #bloque-elhijo{
   margin: 2em;
@@ -151,7 +164,7 @@ h1#LwOds-Front{
   height: 70%;
   margin:25px;
   margin-bottom: 12px;
-  background-color: #E2DED0;
+  background-color: rgb(42, 42, 42);
 }
 
 #bloque-letter{
