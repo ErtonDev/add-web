@@ -14,13 +14,13 @@
   <body>
     <header>
       <div id="logo" class="header-elements">
-        <b href="/">ADD</b>
+        <b id="ADD" onclick="location.href='/'">ADD</b>
         <p id="path"> / Inicio</p>
       </div>
       <div></div>
       <div id="perfil" class="header-elements">
-        <a class="perfil-elements">Sing In</a>
-        <a class="perfil-elements">Sing Up</a>
+        <a class="perfil-elements">Log In</a>
+        <a class="perfil-elements">Sign Up</a>
         <a class="perfil-elements">Perfil</a>
       </div>
     </header>
@@ -32,32 +32,42 @@
         <p id="desc2-front">"La mejor manera de conectar, divertirse y<br>trabajar juntos" ~ 3rt0n, Administrador
       </div>
       <div id="front-right">
-        <h1 id="LwOds-Front">La web OFICIAL <br>del servidor</h1>
+        <div id="front-panel">
+          <h1 id="reg-text">Registro</h1>
+          <form method="POST">
+            <input class="cl-input" type="submint" name="reg-user" placeholder="Usuario">
+            <input class="cl-input" type="submint" name="reg-pass1" placeholder="Contraseña">
+            <input class="cl-input" type="submint" name="reg-pass2" placeholder="Repite la contraseña">
+          </form>
+        </div>
       </div>
     </div>
     <div class="container">
-      <button onclick="location.href=''" id="bloque-elhijo" class="bloque">
+      <button onclick="location.href='/bot'" id="bloque-elhijo" class="bloque">
         <a class="bloque-button" href="#"></a>
         <p id="bloque-img" class="bloque-elements"></p>
         <p id="bloque-letter" class="bloque-elements">El Hijo</p>
       </button>
-      <button onclick="location.href=''" id="bloque-perfil" class="bloque">
+      <button onclick="location.href='/profile'" id="bloque-perfil" class="bloque">
         <p id="bloque-img" class="bloque-elements"></p>
         <p id="bloque-letter" class="bloque-elements">Perfil</p>
       </button>
-      <button onclick="location.href=''" id="bloque-addeditorial" class="bloque">
+      <button onclick="location.href='/library'" id="bloque-addeditorial" class="bloque">
         <p id="bloque-img" class="bloque-elements"></p>
         <p id="bloque-letter" class="bloque-elements">ADDeditorial</p>
       </button>
     </div>
     <div class="container-wave">
-      <div style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none"
-        style="height: 100%; width: 100%;">
-        <path d="M0.00,49.98 C149.99,150.00 271.49,-49.98 500.00,49.98 L500.00,0.00 L0.00,0.00 Z" style="stroke: none; fill: #ffffff;"></path>
-      </svg></div>
+      <div style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.98 C149.99,150.00 271.49,-49.98 500.00,49.98 L500.00,0.00 L0.00,0.00 Z" style="stroke: none; fill: #ffffff;"></path></svg></div>
     </div>
     <div class="container-2">
+      <div id="discord-wid">
+        <iframe src="https://discord.com/widget?id=771068318139416609&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      </div>
+      <div id="op">
+        <h1>¡ÚNETE<br>A NUESTRO<br>SERVIDOR!</h1>
 
+      </div>
     </div>
   </body>
 </html>
