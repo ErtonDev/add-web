@@ -91,25 +91,54 @@ h1#AuDeDi-Front{
 
 #front-panel{
   position: absolute;
-  top:20%;
-  left:55%;
-  height: 400px;
+  top:25%;
+  left:60%;
+  height: 350px;
   width: 300px;
   background-color: white;
   border-radius: 5px;
 }
-#reg-text{
+#reg-title{
   margin: 20px;
+  margin-bottom: 0px;
+  font-size: 40px;
 }
 .cl-input{
-  margin-top: 40px;
-  margin-left:15px; 
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  margin-top: 20px;
+  margin-left:15px;
   width: 90%;
-  height: 25px;
+  height:30px;
   font-size: 15px;
   font-family: 'Roboto', sans-serif;
 }
-
+#reg-text{
+  margin: 20px;
+  font-size: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+#but-reg{
+  position: absolute;
+  margin-top: 35px;
+  margin-left: 195px;
+  width: 95px;
+  height: 32px;
+  background-color: #ff9e3d;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#but-reg:hover{
+  background-color:#de852c
+}
+#let-reg-but{
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: white;
+  margin:12.5px;
+  margin-top: 7px;
+}
 /*FRONT*//*FRONT*//*FRONT*/
 
 /*CONTAINER*//*CONTAINER*//*CONTAINER*/
