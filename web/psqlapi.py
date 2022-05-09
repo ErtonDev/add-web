@@ -39,11 +39,11 @@ def post_bot(conn, stock, cant, cr):
         conn.commit()
 
 #POST(User) Function
-def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac, user_pwrd):
+def post_user(conn, user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac):
     try:
         cur = conn.cursor()
         cur.execute(f"""INSERT INTO users(user_id, user_name, user_cr, user_e1, user_e2, user_e3, user_e4, user_n1, user_n2, user_lvl, user_pt, user_prestige, user_transac)
-        VALUES({user_id}, '{user_name}', {user_cr}, {user_e1}, {user_e2}, {user_e3}, {user_e4}, {user_n1}, {user_n2}, {user_lvl}, {user_pt}, '{user_prestige}', {user_transac}, '{user_pwrd}')""")
+        VALUES({user_id}, '{user_name}', {user_cr}, {user_e1}, {user_e2}, {user_e3}, {user_e4}, {user_n1}, {user_n2}, {user_lvl}, {user_pt}, '{user_prestige}', {user_transac})""")
         conn.commit()
         cur.close()
     except Exception as error:
