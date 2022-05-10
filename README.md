@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/ErtonDev/add-web/main/resources/elhijologo.png" width="75"/>
+
 # add-web
 [![Python 3.9](https://img.shields.io/badge/python-3.9-yellow.svg)](https://www.python.org/)
 [![Build](https://img.shields.io/badge/Supported_OS-Linux-orange.svg)]()
