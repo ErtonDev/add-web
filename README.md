@@ -1,6 +1,7 @@
 # add-web
 [![Python 3.9](https://img.shields.io/badge/python-3.9-yellow.svg)](https://www.python.org/)
 [![Build](https://img.shields.io/badge/Supported_OS-Linux-orange.svg)]()
+[![Build](https://img.shields.io/badge/Supported_OS-Windows-orange.svg)]()
 [![GitHub Repo stars](https://img.shields.io/github/stars/ErtonDev/add-web?style=social)](https://github.com/ErtonDev/add-web)
 [![GitHub forks](https://img.shields.io/github/forks/ErtonDev/add-web?style=social)](https://github.com/ErtonDev/add-web)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/ErtonDev?label=Sponsor%20me&logo=github%20sponsors&style=social)](https://github.com/sponsors/ErtonDev)
