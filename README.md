@@ -1,6 +1,12 @@
+<img src="https://raw.githubusercontent.com/ErtonDev/add-web/main/resources/elhijologo.png" width="75"/>
+
 # add-web
 [![Python 3.9](https://img.shields.io/badge/python-3.9-yellow.svg)](https://www.python.org/)
 [![Build](https://img.shields.io/badge/Supported_OS-Linux-orange.svg)]()
+[![Build](https://img.shields.io/badge/Supported_OS-Windows-orange.svg)]()
+[![GitHub Repo stars](https://img.shields.io/github/stars/ErtonDev/add-web?style=social)](https://github.com/ErtonDev/add-web)
+[![GitHub forks](https://img.shields.io/github/forks/ErtonDev/add-web?style=social)](https://github.com/ErtonDev/add-web)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/ErtonDev?label=Sponsor%20me&logo=github%20sponsors&style=social)](https://github.com/sponsors/ErtonDev)
 
 ADD-WEB is a Discord server related website and other important scripts related to the project. Some of the files aren't directly related to the website that we are trying to build, but they are the scripts of our discord bot. The website should be able to display information from our database that will be sent there by the bot. We are mainly doing this to learn new skills and we thought that making it public would also be a good idea in case we need any help.
 
