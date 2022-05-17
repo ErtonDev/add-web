@@ -1,6 +1,8 @@
-<img src="https://raw.githubusercontent.com/ErtonDev/add-web/main/resources/elhijologo.png" width="75"/>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ErtonDev/add-web/main/resources/elhijologo.png" width="75"/>
+  <h1 align="center">ADD-Web</h1>
+</p>
 
-# add-web
 [![Python 3.9](https://img.shields.io/badge/python-3.9-yellow.svg)](https://www.python.org/)
 [![Build](https://img.shields.io/badge/Supported_OS-Linux-orange.svg)]()
 [![Build](https://img.shields.io/badge/Supported_OS-Windows-orange.svg)]()
