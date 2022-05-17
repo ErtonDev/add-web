@@ -14,14 +14,6 @@ app = Flask(__name__)
 def index():
     return render_template("index.html", name="Home")
 
-@app.route("/", methods=['POST'])
-def reg_form():
-    cl_user = request.form['cl-user']
-    cl_pass1 = request.form['cl-pass1']
-    cl_pass2 = resuest.form['cl-pass2']
-
-    # send this data to new user
-
 # bot
 @app.route("/bot")
 def bot():
