@@ -1,3 +1,8 @@
+# Code made by MarcBen05®
+# Copyright MIT licence 
+# Made during: 2021-2022
+# https://github.com/MarcBen05
+
 import psycopg2
 import os
 from dotenv import load_dotenv
