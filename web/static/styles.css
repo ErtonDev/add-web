@@ -14,6 +14,13 @@ body{
   color: black;
 
 }
+.lg{
+  position: absolute;
+  font-size: 1,5vw;
+  color: black;
+  top: 200px;
+  left: 20px;
+}
 /*HEADER*//*HEADER*//*HEADER*/
 header {
   display: grid;
@@ -101,14 +108,17 @@ h1#AuDeDi-Front{
 #reg-title{
   margin: 20px;
   margin-bottom: 0px;
-  font-size: 40px;
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
 }
 .cl-input{
   border-radius: 5px;
   border-style: solid;
+  border-color: #DCDCDC;
   border-width: 1px;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-left:15px;
+  margin-bottom: 10px;
   width: 90%;
   height:30px;
   font-size: 15px;
@@ -116,12 +126,21 @@ h1#AuDeDi-Front{
 }
 #reg-text{
   margin: 20px;
-  font-size: 10px;
+  margin-top: 10px;
+  font-size: 15px;
   font-family: 'Roboto', sans-serif;
+}
+#img-buscar{
+  width: 200px;
+  height: 110px;
+  margin: auto;
+  background: url(search-img.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 #but-reg{
   position: absolute;
-  margin-top: 35px;
+  margin-top: 20px;
   margin-left: 195px;
   width: 95px;
   height: 32px;
@@ -136,7 +155,7 @@ h1#AuDeDi-Front{
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   color: white;
-  margin:12.5px;
+  margin:23px;
   margin-top: 7px;
 }
 /*FRONT*//*FRONT*//*FRONT*/
@@ -249,8 +268,6 @@ h1#AuDeDi-Front{
   margin-left: -20%;
 }
 /*CONTAINER2*//*CONTAINER2*//*CONTAINER2*/
-
-
 
 /*ANIMATIONS*//*ANIMATIONS*//*ANIMATIONS*/
 
