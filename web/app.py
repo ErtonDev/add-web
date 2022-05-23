@@ -22,12 +22,19 @@ def bot():
 # profile
 @app.route("/profile")
 def profile():
-    return render_template("profile.html", name="Profile")
+    return render_template("normas.html", name="Normas")
 
 # library
 @app.route("/library")
 def library():
     return render_template("library.html", name="ADDeditorial")
+
+
+
+# 404
+@app.errorhandler(404)
+def invalid_route(e):
+    return render_template("notfound.html", name="Not Found")
 
 
 
