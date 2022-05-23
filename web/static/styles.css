@@ -169,7 +169,7 @@ h1#AuDeDi-Front{
   background-color: #ffffff;
 }
 .bloque{
-  grid-template-rows: 80% 20%;
+  grid-template-rows: 80%, 20%;
   border-radius: 5px;
   background-color: white;
   display: block;
@@ -225,11 +225,29 @@ h1#AuDeDi-Front{
   -webkit-animation-duration: 0.3s;
   -webkit-animation-fill-mode: forwards;
 }
-#bloque-img{
+#bloque-img-normas{
   height: 70%;
   margin:25px;
   margin-bottom: 12px;
-  background-color: rgb(42, 42, 42);
+  background:url(elhijo_commandnotfound1.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#bloque-img-addedi{
+  height: 70%;
+  margin:25px;
+  margin-bottom: 12px;
+  background:url(ADDEditorial.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+#bloque-img-elhijo{
+  height: 70%;
+  margin:25px;
+  margin-bottom: 12px;
+  background:url(elhijo_commandnotfound3.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #bloque-letter{
