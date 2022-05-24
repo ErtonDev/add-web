@@ -11,23 +11,30 @@ app = Flask(__name__)
 
 # home
 @app.route("/")
-def index():
-    return render_template("index.html", name="Home")
+def render_home():
+    return render_template("index.html", name="Inicio")
 
 # bot
-@app.route("/bot")
-def bot():
+@app.route("/add-bot")
+def render_bot():
     return render_template("bot.html", name="El Hijo")
 
 # profile
-@app.route("/profile")
-def profile():
-    return render_template("profile.html", name="Profile")
+@app.route("/add-nor")
+def render_normas():
+    return render_template("normas.html", name="Normas")
 
 # library
-@app.route("/library")
-def library():
+@app.route("/add-lib")
+def render_files():
     return render_template("library.html", name="ADDeditorial")
+
+
+
+# 404
+@app.errorhandler(404)
+def invalid_route(e):
+    return render_template("notfound.html", name="Not Found")
 
 
 
