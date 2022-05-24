@@ -60,6 +60,12 @@ div#perfil{
 }
 /*HEADER*//*HEADER*//*HEADER*/
 
+/*MAIN-IMAGE*//*MAIN-IMAGE*/
+.main-image{
+    box-align: "center";
+}
+/*MAIN-IMAGE*//*MAIN-IMAGE*/
+
 /*FRONT*//*FRONT*//*FRONT*/
 div#front{
   display: grid;
