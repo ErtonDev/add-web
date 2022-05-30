@@ -22,7 +22,7 @@ def render_bot():
 # profile
 @app.route("/add-nor")
 def render_normas():
-    return render_template("normas/normas.html", name="Normas")
+    return render_template("normas.html", name="Normas")
 
 # library
 @app.route("/add-lib")
